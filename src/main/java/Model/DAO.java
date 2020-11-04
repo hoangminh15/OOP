@@ -16,7 +16,7 @@ public class DAO {
     static final String USERNAME = "root";
     static final String PASSWORD = "Minh1592";
 
-    public void layDataTheoMa(String date, String maSan, String tenSan) {
+    public void layDataTheoMa(String date, String maSan, String maCoPhieu) {
 
         Connection connection = null;
         Statement statement = null;
@@ -24,12 +24,27 @@ public class DAO {
             Class.forName("com.mysql.cj.jdbc.Driver");
             connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
             statement = connection.createStatement();
-            String sql = "SELECT `<Ticker>` FROM StockData.`CafeF.HNX.02.11.2020`";
+            //Query theo ngay - san - ma
+            String nam = date.substring(0, 4);
+            String thang = date.substring(4, 6);
+            String ngay = date.substring(6);
+            if (Integer.valueOf(ngay) < 10){
+                ngay = "0" + ngay;
+            }
+
+            System.out.println(ngay + " " + thang + " " + nam);
+            String sql = "SELECT * FROM StockData.`CafeF." + maSan + "." + ngay + "." + thang + "." + nam + "` WHERE `<Ticker>` = '" + maCoPhieu +"'";
             ResultSet rs = statement.executeQuery(sql);
             while (rs.next()) {
 //                List<String> tickerList = new ArrayList<String>();
 //                tickerList.add(rs.getNString("<Ticker>"));
-                System.out.println(rs.getNString("<Ticker>"));
+                System.out.println(rs.getString(1));
+                System.out.println(rs.getString(2));
+                System.out.println(rs.getString(3));
+                System.out.println(rs.getString(4));
+                System.out.println(rs.getString(5));
+                System.out.println(rs.getString(6));
+                System.out.println(rs.getString(7));
             }
             System.out.println();
         } catch (Exception ex) {

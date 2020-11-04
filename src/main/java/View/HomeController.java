@@ -73,12 +73,11 @@ public class HomeController implements Initializable {
 //            missingFieldAlert.show();
 //            return;
 //        }
-        String maSan = maText.getText();
-        String tenSan = sanText.getText();
+        String maCoPhieu = maText.getText();
+        String maSan = sanText.getText();
         //Get data
-        DAOObject.layDataTheoMa(dateData, maSan, tenSan);
+        DAOObject.layDataTheoMa(dateData, maSan, maCoPhieu);
         //Sinh cau
-        System.out.println("Da toi day");
     }
 
     //Listener cho Bluechip
