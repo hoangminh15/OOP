@@ -8,9 +8,13 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 
+import java.io.File;
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
@@ -37,27 +41,23 @@ public class HomeController implements Initializable {
     Button xemTheoNhomButton;
     @FXML
     TextArea banTinText;
+    @FXML
+    ImageView imageView;
+
 
     String dateData;
     DAO DAOObject;
     DateValidator dateValidator;
     TestSentence testSentence;
 
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        banTinText.setText("Default text");
         DAOObject = new DAO();
         dateValidator = new DateValidator();
-    }
-
-    public boolean checkEmpty() {
-        if (sanText.getText() == "" || maText.getText() == "") {
-            Alert missingFieldAlert = new Alert(Alert.AlertType.INFORMATION);
-            missingFieldAlert.setTitle("Missing Field");
-            missingFieldAlert.setContentText("You need to fill in all the required field");
-            return false;
-        }
-        return true;
+        File file = new File("View/stockPic.jpeg");
+        Image image = new Image(file.toURI().toString());
+        imageView = new ImageView(image);
     }
 
     //Action Listener cho DatePicker
@@ -99,21 +99,24 @@ public class HomeController implements Initializable {
         //Get data
 
         DataTheoMa data = DAOObject.layDataTheoMa(dateData, maSan, maCoPhieu);
+        //Sinh cau
         testSentence = new TestSentence(data);
         String testResult = testSentence.generateSentence();
-
-
-
-        //Sinh cau
         banTinText.setText(testResult);
 
     }
 
     //Listener cho Bluechip
-    public void xemBluechip(ActionEvent event) {
+    public void xemBluechip(ActionEvent event) throws Exception{
         //Get data
-        //Sinh cau
+        ArrayList<DataTheoMa> listBluechip = DAOObject.layDataBluechip(dateData);
+        //Test: in ten cac co phieu bluechip
+        System.out.println("Here!");
+        for (DataTheoMa bluechip : listBluechip){
+            System.out.println(bluechip.getMaCoPhieu());;
 
+        }
+        //Sinh cau
     }
 
     //Listener cho nuocNgoai
