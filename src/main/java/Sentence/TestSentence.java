@@ -19,6 +19,7 @@ public class TestSentence {
         Double open = data.getOpen();
         Double close = data.getClose();
         Double percentageChange = abs((close - open)/open);
+        Double roundedPercentageChange = Math.round(percentageChange * 1000.0) / 1000.0;
         String maCoPhieu = data.getMaCoPhieu();
         String loaiThayDoi;
         if (close > open){
@@ -26,7 +27,7 @@ public class TestSentence {
         } else if (close == open){
             loaiThayDoi = " không đổi ";
         } else loaiThayDoi = " giảm ";
-        String sentence = "Cổ phiểu " + maCoPhieu + " hôm nay " + loaiThayDoi + " " + percentageChange + "%, và có khả năng tiếp tục tăng trong tương lai";
+        String sentence = "Cổ phiểu " + maCoPhieu + " hôm nay " + loaiThayDoi + " " + roundedPercentageChange + "%, và có khả năng tiếp tục tăng trong tương lai";
         return sentence;
     }
 

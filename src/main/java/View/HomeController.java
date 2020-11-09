@@ -2,8 +2,10 @@ package View;
 
 import Entity.DataTheoMa;
 import Helper.DateValidator;
-import Model.DAO;
+import DAO.DatabaseGetter;
 import Sentence.TestSentence;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -22,7 +24,7 @@ public class HomeController implements Initializable {
     @FXML
     DatePicker thoiGian;
     @FXML
-    TextField sanText;
+    ComboBox<String> sanText;
     @FXML
     TextField maText;
     @FXML
@@ -46,18 +48,20 @@ public class HomeController implements Initializable {
 
 
     String dateData;
-    DAO DAOObject;
+    DatabaseGetter databaseGetterObject;
     DateValidator dateValidator;
     TestSentence testSentence;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        DAOObject = new DAO();
+        databaseGetterObject = new DatabaseGetter();
         dateValidator = new DateValidator();
         File file = new File("View/stockPic.jpeg");
         Image image = new Image(file.toURI().toString());
         imageView = new ImageView(image);
+        ObservableList<String> comboboxList = FXCollections.observableArrayList("HSX", "HNX");
+        sanText.setItems(comboboxList);
     }
 
     //Action Listener cho DatePicker
@@ -67,7 +71,7 @@ public class HomeController implements Initializable {
         //0 tương đương với Sunday, 6 tương đương với Saturday là 2 ngày thị trường chứng khoán không hoạt động
         int dayOfWeekByInt = dateValidator.findDayOfWeek(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
         System.out.println(dayOfWeekByInt);
-        if(dayOfWeekByInt == 0 || dayOfWeekByInt == 6){
+        if (dayOfWeekByInt == 0 || dayOfWeekByInt == 6) {
             Alert invalidDay = new Alert(Alert.AlertType.INFORMATION);
             invalidDay.setTitle("Invalid day!");
             invalidDay.setHeaderText("Stock market isn't active on Saturday and Sunday");
@@ -87,18 +91,17 @@ public class HomeController implements Initializable {
 
     //Listener cho xemTheoMaButton
     public void xemTheoMa(ActionEvent event) throws Exception {
-        if((sanText.getText().equals("")) || (maText.getText().equals("")) || (dateData.isBlank())){
+        if ((sanText.getValue().equals("")) || (maText.getText().equals("")) || (dateData.isBlank())) {
             Alert missingFieldAlert = new Alert(Alert.AlertType.INFORMATION);
             missingFieldAlert.setTitle("Missing Field");
             missingFieldAlert.setContentText("You need to fill in all the required field");
             missingFieldAlert.show();
             return;
         }
-        String maCoPhieu = maText.getText();
-        String maSan = sanText.getText();
+        String maCoPhieu = maText.getText().toUpperCase();
+        String maSan = sanText.getValue().toUpperCase();
         //Get data
-
-        DataTheoMa data = DAOObject.layDataTheoMa(dateData, maSan, maCoPhieu);
+        DataTheoMa data = databaseGetterObject.layDataTheoMa(dateData, maSan, maCoPhieu);
         //Sinh cau
         testSentence = new TestSentence(data);
         String testResult = testSentence.generateSentence();
@@ -107,14 +110,14 @@ public class HomeController implements Initializable {
     }
 
     //Listener cho Bluechip
-    public void xemBluechip(ActionEvent event) throws Exception{
+    public void xemBluechip(ActionEvent event) throws Exception {
         //Get data
-        ArrayList<DataTheoMa> listBluechip = DAOObject.layDataBluechip(dateData);
+        //Tra ve list cac "data object" thuoc nhom co phieu BlueChip
+        ArrayList<DataTheoMa> listBluechip = databaseGetterObject.layDataBluechip(dateData);
         //Test: in ten cac co phieu bluechip
         System.out.println("Here!");
-        for (DataTheoMa bluechip : listBluechip){
-            System.out.println(bluechip.getMaCoPhieu());;
-
+        for (DataTheoMa bluechip : listBluechip) {
+            banTinText.setText(bluechip.getMaCoPhieu());
         }
         //Sinh cau
     }
@@ -123,12 +126,12 @@ public class HomeController implements Initializable {
     public void xemNuocNgoai(ActionEvent event) {
         //Get Data
         //Sinh cau
-
     }
 
     public void xemTangManh(ActionEvent event) {
         //Get Data
         //Sinh cau
+
     }
 
     public void xemGiamManh(ActionEvent event) {

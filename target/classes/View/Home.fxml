@@ -11,14 +11,10 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="731.0" prefWidth="1016.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomeController">
-   <right>
-      <HBox prefHeight="583.0" prefWidth="202.0" BorderPane.alignment="CENTER" />
-   </right>
    <left>
       <AnchorPane prefHeight="538.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -30,7 +26,6 @@
             <Label layoutX="13.0" layoutY="57.0" text="Chọn ngày" />
             <DatePicker fx:id="thoiGian" layoutX="3.0" layoutY="79.0" onAction="#pickDate" />
             <Label layoutX="11.0" layoutY="111.0" text="Chọn sàn" />
-            <TextField fx:id="sanText" layoutX="9.0" layoutY="135.0" prefHeight="26.0" prefWidth="171.0" />
             <Label layoutX="12.0" layoutY="169.0" text="Chọn mã" />
             <ComboBox layoutX="26.0" layoutY="445.0" prefWidth="150.0" />
             <Button layoutX="77.0" layoutY="232.0" mnemonicParsing="false" onAction="#xemTheoMa" styleClass="xemButton" text="Xem" />
@@ -51,6 +46,7 @@
             <Button layoutX="77.0" layoutY="489.0" mnemonicParsing="false" styleClass="xemButton" text="Xem" />
             <TextField fx:id="maText" layoutX="9.0" layoutY="192.0" />
             <Line endX="100.0" layoutX="103.0" layoutY="274.0" startX="-100.0" />
+            <ComboBox fx:id="sanText" editable="true" layoutX="11.0" layoutY="136.0" prefWidth="150.0" visibleRowCount="3" />
          </children>
          <padding>
             <Insets bottom="15.0" right="15.0" top="15.0" />
@@ -83,4 +79,17 @@
          </children>
       </AnchorPane>
    </top>
+   <right>
+      <AnchorPane prefHeight="544.0" prefWidth="208.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label layoutX="55.0" layoutY="32.0" text="Ngay lúc này..." />
+            <Label layoutX="28.0" layoutY="90.0" text="Các cổ phiếu biến động mạnh " />
+            <Button layoutX="127.0" layoutY="123.0" mnemonicParsing="false" text="Giảm" />
+            <Button layoutX="20.0" layoutY="123.0" mnemonicParsing="false" text="Tăng" />
+            <Button layoutX="28.0" layoutY="242.0" mnemonicParsing="false" text="VN30" />
+            <Button layoutX="128.0" layoutY="242.0" mnemonicParsing="false" text="HNX30" />
+            <Label layoutX="81.0" layoutY="200.0" text="TOP 30" />
+         </children>
+      </AnchorPane>
+   </right>
 </BorderPane>
