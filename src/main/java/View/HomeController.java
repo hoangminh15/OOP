@@ -3,7 +3,8 @@ package View;
 import Entity.DataTheoMa;
 import Helper.DateValidator;
 import DAO.DatabaseGetter;
-import Sentence.TestSentence;
+import DAO.TickerValidator;
+import Sentence.SentenceByTickerGenerator;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -50,7 +51,7 @@ public class HomeController implements Initializable {
     String dateData;
     DatabaseGetter databaseGetterObject;
     DateValidator dateValidator;
-    TestSentence testSentence;
+    SentenceByTickerGenerator sentenceByTickerGenerator;
 
 
     @Override
@@ -73,9 +74,9 @@ public class HomeController implements Initializable {
         System.out.println(dayOfWeekByInt);
         if (dayOfWeekByInt == 0 || dayOfWeekByInt == 6) {
             Alert invalidDay = new Alert(Alert.AlertType.INFORMATION);
-            invalidDay.setTitle("Invalid day!");
-            invalidDay.setHeaderText("Stock market isn't active on Saturday and Sunday");
-            invalidDay.setContentText("Please choose another day...!");
+            invalidDay.setTitle("Ngày không hợp lệ");
+            invalidDay.setHeaderText("Thị trường chứng khoán không hoạt động vào thứ Bảy và chủ nhật ");
+            invalidDay.setContentText("Hãy chọn ngày khác (từ thứ Hai đến thứ Sáu ");
             ButtonType OKbuttonType = new ButtonType("Got it!", ButtonBar.ButtonData.OK_DONE);
             invalidDay.getButtonTypes().setAll(OKbuttonType, ButtonType.CANCEL);
             invalidDay.show();
@@ -93,19 +94,31 @@ public class HomeController implements Initializable {
     public void xemTheoMa(ActionEvent event) throws Exception {
         if ((sanText.getValue().equals("")) || (maText.getText().equals("")) || (dateData.isBlank())) {
             Alert missingFieldAlert = new Alert(Alert.AlertType.INFORMATION);
-            missingFieldAlert.setTitle("Missing Field");
-            missingFieldAlert.setContentText("You need to fill in all the required field");
+            missingFieldAlert.setTitle("Trường ng tin bị trống ");
+            missingFieldAlert.setContentText("Bạn cần điền đầy đủ các thông tin cần thiết để có thể xem thông tin chứng khoán");
             missingFieldAlert.show();
             return;
         }
         String maCoPhieu = maText.getText().toUpperCase();
         String maSan = sanText.getValue().toUpperCase();
+
+        //Method check maCoPhieu co thuoc maSan khong
+        if (new TickerValidator().checkExistence(maCoPhieu, maSan)){
+            DataTheoMa data = databaseGetterObject.layDataTheoMa(dateData, maSan, maCoPhieu);
+            //Sinh cau
+            sentenceByTickerGenerator = new SentenceByTickerGenerator(data);
+            String testResult = sentenceByTickerGenerator.generateSentence();
+            banTinText.setText(testResult);
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Mã cổ phiếu không hợp lệ ");
+            alert.setHeaderText("Mã cổ phiểu không tồn tại hoặc không thuộc sàn chứng khoán này ");
+            alert.setContentText("Hãy kiểm tra lại mã cổ phiểu hoặc mã sàn");
+            alert.show();
+        }
         //Get data
-        DataTheoMa data = databaseGetterObject.layDataTheoMa(dateData, maSan, maCoPhieu);
-        //Sinh cau
-        testSentence = new TestSentence(data);
-        String testResult = testSentence.generateSentence();
-        banTinText.setText(testResult);
+
+
 
     }
 
@@ -115,7 +128,6 @@ public class HomeController implements Initializable {
         //Tra ve list cac "data object" thuoc nhom co phieu BlueChip
         ArrayList<DataTheoMa> listBluechip = databaseGetterObject.layDataBluechip(dateData);
         //Test: in ten cac co phieu bluechip
-        System.out.println("Here!");
         for (DataTheoMa bluechip : listBluechip) {
             banTinText.setText(bluechip.getMaCoPhieu());
         }

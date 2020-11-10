@@ -15,6 +15,7 @@ public class DataGetter {
 
     Connection connection = null;
     Statement statement = null;
+    ResultSet rs = null;
 
     String ticker;
     String dateTime;
@@ -44,7 +45,7 @@ public class DataGetter {
     }
 
     //Tách dữ liệu từ bộ k quả tránh lặp code giữa các method lấy data
-    public void extractFromResultSet(ResultSet rs) throws Exception {
+    public void setFromResultSet(ResultSet rs) throws Exception {
         ticker = rs.getString("<Ticker>");
         dateTime = rs.getString("<DTYYYYMMDD>");
         open = Double.parseDouble(rs.getString("<Open>"));

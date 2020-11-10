@@ -4,18 +4,15 @@ import Entity.DataTheoMa;
 
 import static java.lang.StrictMath.abs;
 
-public class TestSentence {
+public class SentenceByTickerGenerator implements iSentence{
     DataTheoMa data;
 
-    public TestSentence(){
-
-    }
-
-    public TestSentence(DataTheoMa data){
+    public SentenceByTickerGenerator(DataTheoMa data){
         this.data = data;
     }
 
     public String generateSentence(){
+        //Can sinh câu phức tạp hơn thế này
         Double open = data.getOpen();
         Double close = data.getClose();
         Double percentageChange = abs((close - open)/open);
