@@ -5,8 +5,11 @@ import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class DatabaseGetter extends DataGetter {
+
 
     public DatabaseGetter() {
         thietLapKetNoi();
@@ -37,6 +40,97 @@ public class DatabaseGetter extends DataGetter {
         return new DataTheoMa(ticker, dateTime, open, high, low, close, volume);
     }
 
+    public ArrayList<DataTheoMa> layDataTheoMaNhieuNgay(String maSan, String maCoPhieu){
+        ArrayList<String> listTables= new ArrayList<>();
+        listTables.add("CafeF.HNX.02.11.2020");
+        listTables.add("CafeF.HNX.03.11.2020");
+        listTables.add("CafeF.HNX.04.11.2020");
+        listTables.add("CafeF.HNX.29.10.2020");
+        listTables.add("CafeF.HNX.30.10.2020");
+        listTables.add("CafeF.HSX.02.11.2020");
+        listTables.add("CafeF.HSX.03.11.2020");
+        listTables.add("CafeF.HSX.30.10.2020");
+
+        ArrayList<DataTheoMa> listData = new ArrayList<>();
+        for (String item: listTables) {
+            if(item.contains(maSan)){
+                String sql = "SELECT * FROM StockData.`" + item +"` WHERE `<Ticker>` = '" + maCoPhieu + "'";
+                try {
+                    rs = statement.executeQuery(sql);
+                    rs.next();
+                    setFromResultSet(rs);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                listData.add(new DataTheoMa(ticker, dateTime, open, high, low, close, volume));
+            }
+        }
+        return listData;
+    }
+
+    // Lấy tất cả data
+    public ArrayList<DataTheoMa> layAllData(){
+        ArrayList<String> listTables= new ArrayList<>();
+        listTables.add("CafeF.HNX.02.11.2020");
+        listTables.add("CafeF.HNX.03.11.2020");
+        listTables.add("CafeF.HNX.04.11.2020");
+        listTables.add("CafeF.HNX.29.10.2020");
+        listTables.add("CafeF.HNX.30.10.2020");
+        listTables.add("CafeF.HSX.02.11.2020");
+        listTables.add("CafeF.HSX.03.11.2020");
+        listTables.add("CafeF.HSX.30.10.2020");
+
+        ArrayList<DataTheoMa> listData = new ArrayList<>();
+        for (String item: listTables) {
+            String sql = "SELECT * FROM StockData.`" + item +"`";
+            String tenSan = "";
+            if(item.startsWith("CafeF.HNX")){
+                tenSan = "HNX";
+            }
+            else if (item.startsWith("CafeF.HSX")){
+                tenSan = "HSX";
+            }
+            try {
+                rs = statement.executeQuery(sql);
+                if(rs.next()){
+                    do{
+                        setFromResultSet(rs);
+                        var dataTheoMa = new DataTheoMa(ticker, dateTime, open, high, low, close, volume);
+                        dataTheoMa.setSan(tenSan);
+                        listData.add(dataTheoMa);
+                    }
+                    while (rs.next());
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        return listData;
+    }
+
+    //Lay data theo group
+    public ArrayList<DataTheoMa> layDataTheoGroup(String groupName){
+        ArrayList<String> listMaDauKhi = new ArrayList<>(
+                Arrays.asList("GAS","PLX","PVD","PVT")
+        );
+
+        ArrayList<String> listMaNganHang = new ArrayList<>(
+                Arrays.asList("STB","VCB","CTG","EIB","MBB","BID","VPB","HDB","TPB","TCB")
+        );
+
+        ArrayList<DataTheoMa> listData = layAllData();
+
+        if(groupName.equals("Dầu khí")){
+            return listData.stream().filter(data -> listMaDauKhi.contains(data.getMaCoPhieu())).collect(Collectors.toCollection(ArrayList::new));
+        }
+        else if(groupName.equals("Ngân hàng")){
+            return listData.stream().filter(data -> listMaNganHang.contains(data.getMaCoPhieu())).collect(Collectors.toCollection(ArrayList::new));
+        }
+        else{
+            return listData;
+        }
+    }
 
     //Lấy data các cổ phiểu bluechip
     public ArrayList<DataTheoMa> layDataBluechip(String date)  {

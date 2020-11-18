@@ -9,6 +9,7 @@ public class DataTheoMa {
     private double low;
     private double close;
     private double volume;
+    private String san;
 
     public DataTheoMa(){
 
@@ -78,5 +79,13 @@ public class DataTheoMa {
 
     public void setVolume(double volume) {
         this.volume = volume;
+    }
+
+    public String getSan() {
+        return san;
+    }
+
+    public void setSan(String san) {
+        this.san = san;
     }
 }
