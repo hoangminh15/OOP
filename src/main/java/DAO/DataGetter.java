@@ -11,7 +11,7 @@ public class DataGetter {
 
     //Database credentials
     static final String USERNAME = "root";
-    static final String PASSWORD = "Minh1592";
+    static final String PASSWORD = "12345678";
 
     Connection connection = null;
     Statement statement = null;
