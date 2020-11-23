@@ -7,6 +7,7 @@ import DAO.DatabaseGetter;
 import DAO.TickerValidator;
 import Sentence.SentenceByTickerGenerator;
 import Sentence.SentenceWithGroupGenerator;
+import Sentence.BlueChip;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -67,7 +68,7 @@ public class HomeController implements Initializable {
     DatabaseGetter databaseGetterObject;
     DateValidator dateValidator;
     SentenceByTickerGenerator sentenceByTickerGenerator;
-
+    BlueChip bluechip; 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -176,45 +177,56 @@ public class HomeController implements Initializable {
 
     //Listener cho xemTheoMaButton
     public void xemTheoMa(ActionEvent event) throws Exception {
-        if ((sanText.getValue() == null || sanText.getValue().equals(""))
-                || (maText.getText() == null || maText.getText().equals("")) || (dateData.isBlank())) {
-            Alert missingFieldAlert = new Alert(Alert.AlertType.INFORMATION);
-            missingFieldAlert.setTitle("Trường ng tin bị trống ");
-            missingFieldAlert.setContentText("Bạn cần điền đầy đủ các thông tin cần thiết để có thể xem thông tin chứng khoán");
-            missingFieldAlert.show();
-            return;
-        }
-        String maCoPhieu = maText.getText().toUpperCase();
-        String maSan = sanText.getValue().toUpperCase();
+		if ((sanText.getValue().equals("")) || (maText.getText().equals("")) || (dateData.isBlank())) {
+			Alert missingFieldAlert = new Alert(Alert.AlertType.INFORMATION);
+			missingFieldAlert.setTitle("Trường ng tin bị trống ");
+			missingFieldAlert
+					.setContentText("Bạn cần điền đầy đủ các thông tin cần thiết để có thể xem thông tin chứng khoán");
+			missingFieldAlert.show();
+			return;
+		}
+		String maCoPhieu = maText.getText().toUpperCase();
+		String maSan = sanText.getValue().toUpperCase();
 
-        //Method check maCoPhieu co thuoc maSan khong
-        if (new TickerValidator().checkExistence(maCoPhieu, maSan)){
-            DataTheoMa data = databaseGetterObject.layDataTheoMa(dateData, maSan, maCoPhieu);
-            //Sinh cau
-            sentenceByTickerGenerator = new SentenceByTickerGenerator(data);
-            String testResult = sentenceByTickerGenerator.generateSentence();
-            banTinText.setText(testResult);
-        } else {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Mã cổ phiếu không hợp lệ ");
-            alert.setHeaderText("Mã cổ phiểu không tồn tại hoặc không thuộc sàn chứng khoán này ");
-            alert.setContentText("Hãy kiểm tra lại mã cổ phiểu hoặc mã sàn");
-            alert.show();
-        }
-        //Get data
-    }
+		// Method check maCoPhieu co thuoc maSan khong
+		if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
+			DataTheoMa data = databaseGetterObject.layDataTheoMa(dateData, maSan, maCoPhieu);
+			// Sinh cau
+			sentenceByTickerGenerator = new SentenceByTickerGenerator(data);
+            String text = sentenceByTickerGenerator.generateSentence() + "\n"
+            + sentenceByTickerGenerator.getReferencePrice() + "\n" + sentenceByTickerGenerator.khoiLuongGD()
+            + "\n" + sentenceByTickerGenerator.giaCP() + "\n";
+			
+			if (!dateData.substring(6).equals("30")){
+				text = text + sentenceByTickerGenerator.GiaTranSan(dateData, maSan, maCoPhieu) + "\n"
+                + sentenceByTickerGenerator.giaCoPhieu(dateData, maSan, maCoPhieu) + "\n"
+                + sentenceByTickerGenerator.soSanhGD(dateData, maSan, maCoPhieu);
+            }
+            banTinText.setText(text);
+
+		} else {
+			Alert alert = new Alert(Alert.AlertType.INFORMATION);
+			alert.setTitle("Mã cổ phiếu không hợp lệ ");
+			alert.setHeaderText("Mã cổ phiểu không tồn tại hoặc không thuộc sàn chứng khoán này ");
+			alert.setContentText("Hãy kiểm tra lại mã cổ phiểu hoặc mã sàn");
+			alert.show();
+		}
+		// Get data
+
+	}
 
     //Listener cho Bluechip
+    
     public void xemBluechip(ActionEvent event) throws Exception {
-        //Get data
-        //Tra ve list cac "data object" thuoc nhom co phieu BlueChip
-        ArrayList<DataTheoMa> listBluechip = databaseGetterObject.layDataBluechip(dateData);
-        //Test: in ten cac co phieu bluechip
-        for (DataTheoMa bluechip : listBluechip) {
-            banTinText.setText(bluechip.getMaCoPhieu());
-        }
-        //Sinh cau
-    }
+		// Get data
+		// Tra ve list cac "data object" thuoc nhom co phieu BlueChip
+		bluechip = new BlueChip(dateData);
+		banTinText.setText(bluechip.highVolume() + bluechip.highGiaTri() + bluechip.lowGiaTri() + bluechip.highGTGD()
+				+ bluechip.tangManh());
+
+		
+
+	}
 
     //Listener cho nuocNgoai
     public void xemNuocNgoai(ActionEvent event) {
