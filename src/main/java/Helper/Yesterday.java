@@ -60,8 +60,5 @@ public class Yesterday {
 		} while (findDayOfWeek(Date) == 0 || findDayOfWeek(Date) == 6);
 		return Date;
 	}
-	public static void main(String[] args) {
-		String day = "20201102";
-		System.out.println(Sau(day));
-	}
+	
 }
