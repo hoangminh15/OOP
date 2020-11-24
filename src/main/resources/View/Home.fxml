@@ -30,16 +30,16 @@
             <Label layoutX="11.0" layoutY="111.0" text="Chọn sàn" />
             <Label layoutX="12.0" layoutY="169.0" text="Chọn mã" />
             <ComboBox fx:id="nhomCoPhieu" layoutX="26.0" layoutY="445.0" prefWidth="150.0" />
-            <Button layoutX="77.0" layoutY="232.0" mnemonicParsing="false" onAction="#xemTheoMa" styleClass="xemButton" text="Xem" />
+            <Button fx:id="xemTheoMaButton" layoutX="77.0" layoutY="232.0" mnemonicParsing="false" onAction="#xemTheoMa" styleClass="xemButton" text="Xem" />
             <Label layoutX="54.0" layoutY="294.0" text="Tin nhanh">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
             <Button fx:id="bluechipButton" layoutX="11.0" layoutY="367.0" mnemonicParsing="false" onAction="#xemBluechip" text="Bluechip" />
-            <Button layoutX="122.0" layoutY="367.0" mnemonicParsing="false" text="Nước ngoài" />
-            <Button layoutX="9.0" layoutY="329.0" mnemonicParsing="false" text="Tăng mạnh" />
-            <Button layoutX="120.0" layoutY="329.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="96.0" text="Giảm mạnh" />
+            <Button fx:id="nuocNgoaiButton" layoutX="122.0" layoutY="367.0" mnemonicParsing="false" onAction="#xemNuocNgoai" text="Nước ngoài" />
+            <Button fx:id="tangManhButton" layoutX="9.0" layoutY="329.0" mnemonicParsing="false" onAction="#xemTangManh" text="Tăng mạnh" />
+            <Button fx:id="giamManhButton" layoutX="120.0" layoutY="329.0" mnemonicParsing="false" onAction="#xemGiamManh" prefHeight="26.0" prefWidth="96.0" text="Giảm mạnh" />
             <Label layoutX="52.0" layoutY="416.0" text="Nhóm Cố Phiếu">
                <font>
                   <Font name="System Bold" size="13.0" />

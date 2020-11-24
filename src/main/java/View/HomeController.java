@@ -1,18 +1,19 @@
 package View;
 
+import DAO.DatabaseGetter;
+import DAO.TickerValidator;
 import Entity.DataTheoMa;
 import Helper.CreateLineChart;
 import Helper.DateValidator;
-import DAO.DatabaseGetter;
-import DAO.TickerValidator;
 import Sentence.SentenceByTickerGenerator;
 import Sentence.SentenceWithGroupGenerator;
+import Sentence.TangManhSentence;
+import Sentence.GiamManhSentence;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.chart.CategoryAxis;
 import javafx.scene.chart.LineChart;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -22,6 +23,7 @@ import javafx.scene.image.ImageView;
 
 import java.io.File;
 import java.net.URL;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
@@ -67,6 +69,8 @@ public class HomeController implements Initializable {
     DatabaseGetter databaseGetterObject;
     DateValidator dateValidator;
     SentenceByTickerGenerator sentenceByTickerGenerator;
+    TangManhSentence TangManhSentence;
+    GiamManhSentence GiamManhSentence;
 
 
     @Override
@@ -222,14 +226,48 @@ public class HomeController implements Initializable {
         //Sinh cau
     }
 
-    public void xemTangManh(ActionEvent event) {
+    public void xemTangManh(ActionEvent event) throws Exception{
         //Get Data
-        //Sinh cau
+        if ((sanText.getValue() == null || sanText.getValue().equals(""))
+                 || (dateData.isBlank())) {
+            Alert missingFieldAlert = new Alert(Alert.AlertType.INFORMATION);
+            missingFieldAlert.setTitle("Trường thông tin bị trống ");
+            missingFieldAlert.setContentText("Bạn cần điền đầy đủ các thông tin cần thiết để có thể xem thông tin chứng khoán");
+            missingFieldAlert.show();
+            return;
+        }
+        String maSan = sanText.getValue().toUpperCase();
+        ArrayList<DataTheoMa> data = databaseGetterObject.layDataTangManh(dateData, maSan);
+        TangManhSentence = new TangManhSentence(data);
+        String testResult = TangManhSentence.generateSentence();
+        banTinText.setText(testResult);
+        //ArrayList<DataTheoMa> listTangManh = databaseGetterObject.layDataTangManh(dateData, sanText);
+        //for (DataTheoMa tangManh : listTangManh) {
+         //   banTinText.setText(tangManh.getMaCoPhieu());
+       // }
+    //Sinh cau
 
     }
 
-    public void xemGiamManh(ActionEvent event) {
+    public void xemGiamManh(ActionEvent event) throws SQLException {
         //Get Data
+        if ((sanText.getValue() == null || sanText.getValue().equals(""))
+                || (dateData.isBlank())) {
+            Alert missingFieldAlert = new Alert(Alert.AlertType.INFORMATION);
+            missingFieldAlert.setTitle("Trường thông tin bị trống ");
+            missingFieldAlert.setContentText("Bạn cần điền đầy đủ các thông tin cần thiết để có thể xem thông tin chứng khoán");
+            missingFieldAlert.show();
+            return;
+        }
+        String maSan = sanText.getValue().toUpperCase();
+        ArrayList<DataTheoMa> data = databaseGetterObject.layDataGiamManh(dateData, maSan);
+        GiamManhSentence = new GiamManhSentence(data);
+        String testResult = GiamManhSentence.generateSentence();
+        banTinText.setText(testResult);
+        //ArrayList<DataTheoMa> listGiamManh = databaseGetterObject.layDataGiamManh(dateData, sanText);
+        //for (DataTheoMa giamManh : listGiamManh) {
+         //   banTinText.setText(giamManh.getMaCoPhieu());
+      //  }
         //Sinh cau
     }
 

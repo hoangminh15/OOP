@@ -1,9 +1,11 @@
 package DAO;
 
-import Entity.DataTheoMa;
 import javafx.scene.control.Alert;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
 public class DataGetter {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -11,7 +13,7 @@ public class DataGetter {
 
     //Database credentials
     static final String USERNAME = "root";
-    static final String PASSWORD = "12345678";
+    static final String PASSWORD = "01475369";
 
     Connection connection = null;
     Statement statement = null;

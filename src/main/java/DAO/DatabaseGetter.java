@@ -1,9 +1,10 @@
 package DAO;
 
 import Entity.DataTheoMa;
-import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
 
-import java.sql.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
@@ -153,9 +154,39 @@ public class DatabaseGetter extends DataGetter {
         }
         return bluechipObjectList;
     }
+    public ArrayList<DataTheoMa> layDataTangManh(String date, String maSan) throws SQLException {
+        var tangManhObjectList = new ArrayList<DataTheoMa>();
+        formatDate(date);
+        String sql = "SELECT * FROM amazing.`Cafef." + maSan + "." + ngay + "." + thang + "." + nam + "` WHERE (`<Close>` - `<Open>`)/`<Open>` >= 0.02 ";
+        try {
+            rs = statement.executeQuery(sql);
+            rs.next();
+            setFromResultSet(rs);
+            tangManhObjectList.add(new DataTheoMa(ticker, date, open, high, low, close, volume));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //Tra ve object chua data
+        return tangManhObjectList;
+    }
+    public ArrayList<DataTheoMa> layDataGiamManh(String date, String maSan) throws SQLException {
+        var giamManhObjectList = new ArrayList<DataTheoMa>();
+        formatDate(date);
+        String sql = "SELECT * FROM amazing.`Cafef." + maSan + "." + ngay + "." + thang + "." + nam + "` WHERE (`<Close>` - `<Open>`)/`<Open>` =< -0.02 ";
+        try {
+            rs = statement.executeQuery(sql);
+            rs.next();
+            setFromResultSet(rs);
+            giamManhObjectList.add(new DataTheoMa(ticker, date, open, high, low, close, volume));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        //Tra ve object chua data
+        return giamManhObjectList;
+    }
 
-//    public ArrayList<DataTheoMa> layDataTangManh(String date, String maSan){
-//        var tangManhObjectList = new ArrayList<DataTheoMa>();
+//   // public ArrayList<DataTheoMa> layDataTangManh(String date, String maSan){
+//     //   var tangManhObjectList = new ArrayList<DataTheoMa>();
 //
 //    }
 }

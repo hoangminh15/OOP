@@ -37,8 +37,8 @@
                </font>
             </Label>
             <Button fx:id="bluechipButton" layoutX="11.0" layoutY="367.0" mnemonicParsing="false" onAction="#xemBluechip" text="Bluechip" />
-            <Button layoutX="122.0" layoutY="367.0" mnemonicParsing="false" text="Nước ngoài" />
-            <Button layoutX="9.0" layoutY="329.0" mnemonicParsing="false" text="Tăng mạnh" />
+            <Button fx:id="nuocNgoaiButton" layoutX="122.0" layoutY="367.0" mnemonicParsing="false" text="Nước ngoài" />
+            <Button fx:id="tangManhButton" layoutX="9.0" layoutY="329.0" mnemonicParsing="false" text="Tăng mạnh" />
             <Button layoutX="120.0" layoutY="329.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="96.0" text="Giảm mạnh" />
             <Label layoutX="52.0" layoutY="416.0" text="Nhóm Cố Phiếu">
                <font>
