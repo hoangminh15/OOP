@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class RealtimeCrawler extends DataGetter {
     public static void main(String[] args) {
         DataRealtime dataRealtime = new DataRealtime();
-        final String url = "https://s.cafef.vn/TraCuuLichSu2/1/HOSE/25/11/2020.chn";
+        final String url = "https://s.cafef.vn/TraCuuLichSu2/1/HOSE/23/11/2020.chn";
         try {
             Document doc = Jsoup.connect(url).get();
             Elements rows = doc.select("table#table2sort tr");
