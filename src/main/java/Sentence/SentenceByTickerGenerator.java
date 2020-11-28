@@ -46,6 +46,41 @@ public class SentenceByTickerGenerator implements iSentence {
 		return message;
 	}
 
+	public String GiaTranSan(String dateData, String masan, String macophieu) {
+
+		String yesterday = Yesterday.Sau(dateData);
+		DataTheoMa dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
+		double referencePrice = dataYesterday.getClose();
+		double tran = Math.round(referencePrice * 1.07);
+		double san = Math.round(referencePrice * 0.93);
+		String message = "Trong phiên giao dịch hôm nay, cổ phiếu " + data.getMaCoPhieu()
+				+ " có giá trần của cổ phiếu là: " + tran + " nghìn đồng, và giá sàn của cổ phiếu là: " + san
+				+ " nghìn đồng";
+		return message;
+	}
+
+	public String giaCoPhieu(String dateData, String masan, String macophieu) {
+		String yesterday = Yesterday.Sau(dateData);
+		DataTheoMa dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
+		double referencePrice = dataYesterday.getClose();
+		double close = data.getClose();
+		double percentageChange = abs((close - referencePrice) / referencePrice);
+		double tyle = Math.round((percentageChange * 1000)) / 10;
+		String soSanh;
+		if (close < referencePrice) {
+			soSanh = "So với ngày hôm qua, cổ phiếu " + data.getMaCoPhieu() + " giảm " + (referencePrice - close) * 1000
+					+ " đồng (" + tyle + "%)";
+		} else {
+			if (close > referencePrice) {
+				soSanh = "So với ngày hôm qua, cổ phiếu " + data.getMaCoPhieu() + " tăng " + (close - referencePrice)
+						+ " đồng (" + tyle + "%)";
+			} else {
+				soSanh = "So với ngày hôm qua, cổ phiếu vẫn giữ giá " + data.getClose() + " đồng";
+			}
+		}
+		return soSanh;
+	}
+
 	public String khoiLuongGD() {
 		String message = "Kết thúc phiên giao dịch ngày hôm nay cổ phiếu " + data.getMaCoPhieu()
 				+ " đạt khối lượng giao dịch là : " + data.getVolume() + " cổ phiếu";
@@ -61,4 +96,22 @@ public class SentenceByTickerGenerator implements iSentence {
 		return message;
 	}
 
-	
+	public String soSanhGD(String dateData, String masan, String macophieu) {
+		String message;
+		String yesterday = Yesterday.Sau(dateData);
+		DataTheoMa dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
+		double yesterdayKL = dataYesterday.getVolume();
+		double ss = Math.abs(data.getVolume() - yesterdayKL);
+		if (data.getVolume() > yesterdayKL) {
+			message = "So với ngày hôm qua khối lượng giao dịch cổ phiếu " + macophieu + " tăng " + ss + " cổ phiếu";
+		} else {
+			if (data.getVolume() < yesterdayKL) {
+				message = "So với ngày hôm qua khối lượng giao dịch giảm " + ss + " cổ phiếu";
+			} else {
+				message = "So với ngày hôm qua khối lượng giao dịch cổ phiếu không tăng";
+			}
+		}
+		return message;
+	}
+
+}
