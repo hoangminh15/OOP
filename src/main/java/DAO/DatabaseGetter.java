@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class DatabaseGetter extends DataGetter {
+public class DatabaseGetter extends DataGetter implements iResultSetter{
 
 
     public DatabaseGetter() {
@@ -158,4 +158,14 @@ public class DatabaseGetter extends DataGetter {
 //        var tangManhObjectList = new ArrayList<DataTheoMa>();
 //
 //    }
+
+    public void setFromResultSet(ResultSet rs) throws Exception {
+        ticker = rs.getString("<Ticker>");
+        dateTime = rs.getString("<DTYYYYMMDD>");
+        open = Double.parseDouble(rs.getString("<Open>"));
+        close = Double.parseDouble(rs.getString("<Close>"));
+        high = Double.parseDouble(rs.getString("<High>"));
+        low = Double.parseDouble(rs.getString("<Low>"));
+        volume = Double.parseDouble(rs.getString("<Volume>"));
+    }
 }

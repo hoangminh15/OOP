@@ -1,12 +1,11 @@
 package Sentence;
 
 import Entity.DataTheoMa;
-import Helper.Yesterday;
 import static java.lang.StrictMath.abs;
 
 import DAO.DatabaseGetter;
 
-public class SentenceByTickerGenerator implements iSentence {
+public class SentenceByTickerGenerator {
 	DataTheoMa data;
 
 	public SentenceByTickerGenerator(DataTheoMa data) {
@@ -60,5 +59,6 @@ public class SentenceByTickerGenerator implements iSentence {
 
 		return message;
 	}
+}
 
 	

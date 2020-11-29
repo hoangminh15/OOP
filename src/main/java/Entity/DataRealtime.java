@@ -1,71 +1,101 @@
 package Entity;
 
-public class DataRealtime {
-    private String ticker;
-    private double open;
-    private double close;
-    private double high;
-    private double low;
-    private double volume;
+public class DataRealtime extends Data{
+    private String maCoPhieu;
+    private double giaDongCua;
+    private String thayDoi;
+    private double giaThamChieu;
+    private double giaMoCua;
+    private double giaCaoNhat;
+    private double giaThapNhat;
+    private double klgdKhopLenh;
+    private double gtgdKhopLenh;
 
-    public DataRealtime() {
+    public DataRealtime(){
 
     }
 
-    public DataRealtime(String ticker, double open, double close, double high, double low, double volume) {
-        this.ticker = ticker;
-        this.open = open;
-        this.close = close;
-        this.high = high;
-        this.low = low;
-        this.volume = volume;
+    public DataRealtime(String maCoPhieu, double giaDongCua, String thayDoi, double giaThamChieu, double giaMoCua, double giaCaoNhat, double giaThapNhat, double klgdKhopLenh, double gtgdKhopLenh) {
+        this.maCoPhieu = maCoPhieu;
+        this.giaDongCua = giaDongCua;
+        this.thayDoi = thayDoi;
+        this.giaThamChieu = giaThamChieu;
+        this.giaMoCua = giaMoCua;
+        this.giaCaoNhat = giaCaoNhat;
+        this.giaThapNhat = giaThapNhat;
+        this.klgdKhopLenh = klgdKhopLenh;
+        this.gtgdKhopLenh = gtgdKhopLenh;
     }
 
-    public String getTicker() {
-        return ticker;
+    public String getMaCoPhieu() {
+        return maCoPhieu;
     }
 
-    public void setTicker(String ticker) {
-        this.ticker = ticker;
+    public void setMaCoPhieu(String maCoPhieu) {
+        this.maCoPhieu = maCoPhieu;
     }
 
-    public double getOpen() {
-        return open;
+    public double getGiaDongCua() {
+        return giaDongCua;
     }
 
-    public void setOpen(double open) {
-        this.open = open;
+    public void setGiaDongCua(double giaDongCua) {
+        this.giaDongCua = giaDongCua;
     }
 
-    public double getClose() {
-        return close;
+    public String getThayDoi() {
+        return thayDoi;
     }
 
-    public void setClose(double close) {
-        this.close = close;
+    public void setThayDoi(String thayDoi) {
+        this.thayDoi = thayDoi;
     }
 
-    public double getHigh() {
-        return high;
+    public double getGiaThamChieu() {
+        return giaThamChieu;
     }
 
-    public void setHigh(double high) {
-        this.high = high;
+    public void setGiaThamChieu(double giaThamChieu) {
+        this.giaThamChieu = giaThamChieu;
     }
 
-    public double getLow() {
-        return low;
+    public double getGiaMoCua() {
+        return giaMoCua;
     }
 
-    public void setLow(double low) {
-        this.low = low;
+    public void setGiaMoCua(double giaMoCua) {
+        this.giaMoCua = giaMoCua;
     }
 
-    public double getVolume() {
-        return volume;
+    public double getGiaCaoNhat() {
+        return giaCaoNhat;
     }
 
-    public void setVolume(double volume) {
-        this.volume = volume;
+    public void setGiaCaoNhat(double giaCaoNhat) {
+        this.giaCaoNhat = giaCaoNhat;
+    }
+
+    public double getGiaThapNhat() {
+        return giaThapNhat;
+    }
+
+    public void setGiaThapNhat(double giaThapNhat) {
+        this.giaThapNhat = giaThapNhat;
+    }
+
+    public double getKlgdKhopLenh() {
+        return klgdKhopLenh;
+    }
+
+    public void setKlgdKhopLenh(double klgdKhopLenh) {
+        this.klgdKhopLenh = klgdKhopLenh;
+    }
+
+    public double getGtgdKhopLenh() {
+        return gtgdKhopLenh;
+    }
+
+    public void setGtgdKhopLenh(double gtgdKhopLenh) {
+        this.gtgdKhopLenh = gtgdKhopLenh;
     }
 }

@@ -16,7 +16,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="731.0" prefWidth="1016.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="View.HomeController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="765.0" prefWidth="1212.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.HomeController">
    <left>
       <AnchorPane prefHeight="538.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -30,7 +30,7 @@
             <Label layoutX="11.0" layoutY="111.0" text="Chọn sàn" />
             <Label layoutX="12.0" layoutY="169.0" text="Chọn mã" />
             <ComboBox fx:id="nhomCoPhieu" layoutX="26.0" layoutY="445.0" prefWidth="150.0" />
-            <Button fx:id="xemTheoMaButton" layoutX="77.0" layoutY="232.0" mnemonicParsing="false" onAction="#xemTheoMa" styleClass="xemButton" text="Xem" />
+            <Button layoutX="77.0" layoutY="232.0" mnemonicParsing="false" onAction="#xemTheoMa" styleClass="xemButton" text="Xem" fx:id="xemTheoMaButton" />
             <Label layoutX="54.0" layoutY="294.0" text="Tin nhanh">
                <font>
                   <Font name="System Bold" size="18.0" />
@@ -61,13 +61,13 @@
    <center>
       <AnchorPane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
-            <TextArea fx:id="banTinText" layoutX="8.0" layoutY="61.0" prefHeight="258.0" prefWidth="538.0" wrapText="true" />
+            <TextArea fx:id="banTinText" layoutX="8.0" layoutY="61.0" prefHeight="310.0" prefWidth="538.0" wrapText="true" />
             <Label layoutX="149.0" layoutY="27.0" text="BẢN TIN CHỨNG KHOÁN">
                <font>
                   <Font name="System Bold Italic" size="19.0" />
                </font>
             </Label>
-            <LineChart fx:id="chart" layoutX="1.0" layoutY="319.0" prefHeight="219.0" prefWidth="545.0">
+            <LineChart fx:id="chart" layoutX="1.0" layoutY="378.0" prefHeight="219.0" prefWidth="545.0">
               <xAxis>
                  <NumberAxis fx:id="timeAxis" side="BOTTOM" />
               </xAxis>
@@ -79,9 +79,9 @@
       </AnchorPane>
    </center>
    <top>
-      <AnchorPane prefHeight="147.0" prefWidth="1016.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="93.0" prefWidth="1212.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView id="image" fx:id="imageView" fitHeight="155.0" fitWidth="417.0" layoutX="353.0" layoutY="-8.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="image" fx:id="imageView" fitHeight="99.0" fitWidth="212.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@stockPic.jpeg" />
                </image>

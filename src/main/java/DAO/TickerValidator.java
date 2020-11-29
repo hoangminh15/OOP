@@ -12,6 +12,7 @@ public class TickerValidator extends DataGetter {
         thietLapKetNoi();
     }
 
+    //Kiem tra xem ma co phieu lieu co thuoc san chung khoan hay khong
     public boolean checkExistence(String maCoPhieu, String maSan) {
         String sql = "SELECT * FROM StockData.`CafeF." + maSan + ".02.11.2020` WHERE `<Ticker>` = '" + maCoPhieu + "'";
         try {

@@ -5,10 +5,10 @@ import DAO.DatabaseGetter;
 
 import Entity.DataTheoMa;
 
-public class BlueChip {
+public class SentenceBluechip {
 	ArrayList<DataTheoMa> listBC;
 
-	public BlueChip(String date) {
+	public SentenceBluechip(String date) {
 		listBC = new DatabaseGetter().layDataBluechip(date);
 	}
 
