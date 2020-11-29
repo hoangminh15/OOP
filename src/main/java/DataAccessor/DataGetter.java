@@ -1,17 +1,20 @@
-package DAO;
+package DataAccessor;
 
-import Entity.DataTheoMa;
 import javafx.scene.control.Alert;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
 
-public class DataGetter {
+public abstract class DataGetter {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/StockData";
 
     //Database credentials
     static final String USERNAME = "root";
-    static final String PASSWORD = "root";
+    static final String PASSWORD = "Minh1592";
+
 
     Connection connection = null;
     Statement statement = null;
@@ -24,6 +27,8 @@ public class DataGetter {
     double high;
     double low;
     double volume;
+
+
 
     String nam;
     String ngay;
@@ -43,18 +48,4 @@ public class DataGetter {
         }
 
     }
-
-    //Tách dữ liệu từ bộ k quả tránh lặp code giữa các method lấy data
-    public void setFromResultSet(ResultSet rs) throws Exception {
-        ticker = rs.getString("<Ticker>");
-        dateTime = rs.getString("<DTYYYYMMDD>");
-        open = Double.parseDouble(rs.getString("<Open>"));
-        close = Double.parseDouble(rs.getString("<Close>"));
-        high = Double.parseDouble(rs.getString("<High>"));
-        low = Double.parseDouble(rs.getString("<Low>"));
-        volume = Double.parseDouble(rs.getString("<Volume>"));
-    }
-
-
-
 }

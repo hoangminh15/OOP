@@ -1,21 +1,19 @@
 package Sentence;
 
 import Entity.DataTheoMa;
-import Helper.Yesterday;
 import static java.lang.StrictMath.abs;
 import java.io.*;
 import java.util.Scanner;
-import DAO.DatabaseGetter;
+import DataAccessor.DatabaseGetter;
+import Helper.YesterdayFinder;
 
-public class SentenceByTickerGenerator implements iSentence {
+public class SentenceByTickerGenerator {
 	DataTheoMa data;
 	File file;
 	Scanner sc;
 
 	public SentenceByTickerGenerator(DataTheoMa data) throws FileNotFoundException {
-		String url = new File("").getAbsolutePath();
-		url = url.concat(File.separator + "Sentence" + File.separator + "cau_theo_ngay.txt");
-		file = new File(url);
+		file = new File("cau_theo_ngay.txt");
 		sc = new Scanner(file);
 		this.data = data;
 	}
@@ -71,7 +69,7 @@ public class SentenceByTickerGenerator implements iSentence {
 
 	public String GiaTranSan(String dateData, String masan, String macophieu) {
 
-		String yesterday = Yesterday.Sau(dateData);
+		String yesterday = new YesterdayFinder().Sau(dateData);
 		DataTheoMa dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
 		double referencePrice = dataYesterday.getClose();
 		double tran = Math.round(referencePrice * 1.07);
@@ -83,7 +81,7 @@ public class SentenceByTickerGenerator implements iSentence {
 	}
 
 	public String giaCoPhieu(String dateData, String masan, String macophieu) {
-		String yesterday = Yesterday.Sau(dateData);
+		String yesterday = new YesterdayFinder().Sau(dateData);
 		DataTheoMa dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
 		double referencePrice = dataYesterday.getClose();
 		double close = data.getClose();
@@ -100,7 +98,7 @@ public class SentenceByTickerGenerator implements iSentence {
 
 	public String soSanhGD(String dateData, String masan, String macophieu) {
 		String message;
-		String yesterday = Yesterday.Sau(dateData);
+		String yesterday = new YesterdayFinder().Sau(dateData);
 		DataTheoMa dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
 		double yesterdayKL = dataYesterday.getVolume();
 		double ss = Math.abs(data.getVolume() - yesterdayKL);
@@ -109,5 +107,5 @@ public class SentenceByTickerGenerator implements iSentence {
 		message = sc.nextLine() + macophieu + type + ss + sc.nextLine();
 		return message;
 	}
-
 }
+

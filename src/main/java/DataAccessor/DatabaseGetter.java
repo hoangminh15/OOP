@@ -1,14 +1,13 @@
-package DAO;
+package DataAccessor;
 
 import Entity.DataTheoMa;
-import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class DatabaseGetter extends DataGetter {
+public class DatabaseGetter extends DataGetter implements iResultSetter{
 
 
     public DatabaseGetter() {
@@ -21,6 +20,9 @@ public class DatabaseGetter extends DataGetter {
         ngay = date.substring(6);
         if (Integer.valueOf(ngay) < 10) {
             ngay = "0" + ngay;
+        }
+        if (Integer.valueOf(thang) < 10){
+            thang = "0" + thang;
         }
     }
 
@@ -158,4 +160,14 @@ public class DatabaseGetter extends DataGetter {
 //        var tangManhObjectList = new ArrayList<DataTheoMa>();
 //
 //    }
+
+    public void setFromResultSet(ResultSet rs) throws Exception {
+        ticker = rs.getString("<Ticker>");
+        dateTime = rs.getString("<DTYYYYMMDD>");
+        open = Double.parseDouble(rs.getString("<Open>"));
+        close = Double.parseDouble(rs.getString("<Close>"));
+        high = Double.parseDouble(rs.getString("<High>"));
+        low = Double.parseDouble(rs.getString("<Low>"));
+        volume = Double.parseDouble(rs.getString("<Volume>"));
+    }
 }

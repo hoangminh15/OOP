@@ -2,3 +2,7 @@
     -fx-background-color: #1877F2;
     -fx-text-fill: #FFFFFF;
 }
+
+.text-area{
+    -fx-padding: 10px;
+}

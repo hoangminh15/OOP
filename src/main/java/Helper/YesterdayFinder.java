@@ -1,8 +1,8 @@
 package Helper;
 
-public class Yesterday {
+public class YesterdayFinder {
 
-	public static int findDayOfWeek(String date) {
+	public int findDayOfWeek(String date) {
 		int year = Integer.parseInt(date.substring(0, 4));
 		int month = Integer.parseInt(date.substring(4, 6));
 		int day = Integer.parseInt(date.substring(6));
@@ -12,14 +12,15 @@ public class Yesterday {
 		return (y + y / 4 - y / 100 + (13 * m + 2) / 5 + day + 2) % 7;
 	}
 
-	public static String date(int ngay, int thang, int nam) {
+	//Format date ve dang ex: 20201123
+	public String formatDate(int ngay, int thang, int nam) {
 		String day, month, year;
 		if (ngay < 10) {
-			day = "0" + Integer.toString(ngay);
+			day = "0" + ngay;
 		} else
 			day = Integer.toString(ngay);
 		if (thang < 10) {
-			month = "0" + Integer.toString(thang);
+			month = "0" + thang;
 		} else
 			month = Integer.toString(thang);
 		year = Integer.toString(nam);
@@ -27,7 +28,7 @@ public class Yesterday {
 		return yesterday1;
 	}
 
-	public static String yesterday(String date) {
+	public String findYesterday(String date) {
 		int dayFeb = 0, nam, thang, ngay;
 		nam = Integer.parseInt(date.substring(0, 4));
 		thang = Integer.parseInt(date.substring(4, 6));
@@ -50,15 +51,15 @@ public class Yesterday {
 				ngay -= 1;
 			}
 		}
-		return date(ngay, thang, nam);
+		return formatDate(ngay, thang, nam);
 	}
 
-	public static String Sau(String date) {
-		String Date = date;
+	public String Sau(String date) {
+		String yesterday;
 		do {
-			Date = Yesterday.yesterday(Date);
-		} while (findDayOfWeek(Date) == 0 || findDayOfWeek(Date) == 6);
-		return Date;
+			yesterday = findYesterday(date);
+		} while (findDayOfWeek(date) == 0 || findDayOfWeek(date) == 6);
+		return yesterday;
 	}
 	
 }

@@ -1,4 +1,4 @@
-package DAO;
+package DataAccessor;
 
 public class DatabaseGetter {
 

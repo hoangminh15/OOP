@@ -1,20 +1,18 @@
 package Sentence;
 
 import java.util.*;
-import DAO.DatabaseGetter;
+import DataAccessor.DatabaseGetter;
 
 import Entity.DataTheoMa;
 import java.io.*;
 
-public class BlueChip {
+public class SentenceBluechip {
 	ArrayList<DataTheoMa> listBC;
 	File file;
 	Scanner sc;
 
-	public BlueChip(String date) throws FileNotFoundException {
-		String url = new File("").getAbsolutePath();
-		url = url.concat(File.separator + "Sentence" + File.separator + "blue_chip.txt");
-		file = new File(url);
+	public SentenceBluechip(String date) throws FileNotFoundException {
+		File file = new File("blue_chip.txt");
 		sc = new Scanner(file);
 		listBC = new DatabaseGetter().layDataBluechip(date);
 	}

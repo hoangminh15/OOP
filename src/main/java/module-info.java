@@ -7,4 +7,7 @@ module org.example {
     opens View to javafx.fxml;
     exports View;
 
+    opens Controller to javafx.fxml;
+    exports Controller;
+
 }

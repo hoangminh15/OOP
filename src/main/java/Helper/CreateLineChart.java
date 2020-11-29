@@ -25,12 +25,7 @@ public class CreateLineChart {
         XYChart.Series<Number, Number> seriesLow = new XYChart.Series<>();
         seriesLow.setName("Low");
 
-        Collections.sort(listData, new Comparator<DataTheoMa>() {
-            @Override
-            public int compare(DataTheoMa o1, DataTheoMa o2) {
-                return Integer.parseInt(o1.getDate()) <  Integer.parseInt(o2.getDate()) ? 1 : -1;
-            }
-        });
+        Collections.sort(listData, (o1, o2) -> Integer.parseInt(o1.getDate()) <  Integer.parseInt(o2.getDate()) ? 1 : -1);
 
         for(DataTheoMa item: listData){
             seriesOpen.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getOpen()));
