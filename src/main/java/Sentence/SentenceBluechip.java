@@ -2,7 +2,7 @@ package Sentence;
 
 import java.util.*;
 import DataAccessor.DatabaseGetter;
-
+import Helper.FormNumber;
 import Entity.DataThuCong;
 import java.io.*;
 
@@ -10,9 +10,12 @@ public class SentenceBluechip {
 	ArrayList<DataThuCong> listBC;
 	File file;
 	Scanner sc;
-
+	private FormNumber form;
 	public SentenceBluechip(String date) throws FileNotFoundException {
-		File file = new File("blue_chip.txt");
+		File file = new File("");
+		String url = file.getAbsolutePath();
+		url = url.replace("java", "resources");
+		file = new File(url+File.separator+"View"+File.separator+"blue_chip.txt");
 		sc = new Scanner(file);
 		listBC = new DatabaseGetter().layDataBluechip(date);
 	}
@@ -29,15 +32,15 @@ public class SentenceBluechip {
 		Iterator<DataThuCong> c = listBC.iterator();
 		DataThuCong a1 = c.next();
 		sc.nextLine();
-		message = sc.nextLine() + a1.getMaCoPhieu() + sc.nextLine() + a1.getVolume() + sc.nextLine();
+		message = sc.nextLine() + a1.getMaCoPhieu() + sc.nextLine() + form.getForm(a1.getVolume()) + sc.nextLine();
 		for (int i = 1; i <= 8; i++) {
 			DataThuCong d = c.next();
-			message = message + d.getMaCoPhieu() + " với " + d.getVolume() + " cổ phiếu ,";
+			message = message + d.getMaCoPhieu() + " với " + form.getForm(d.getVolume()) + " cổ phiếu ,";
 		}
 		DataThuCong d1 = c.next(), d2 = c.next(), d3 = c.next();
-		message = message + "\n" + sc.nextLine() + d3.getMaCoPhieu() + " với " + d3.getVolume() + sc.nextLine()
-				+ d2.getMaCoPhieu() + " với " + d2.getVolume() + sc.nextLine() + d1.getMaCoPhieu() + " với "
-				+ d1.getVolume() + sc.nextLine() + (d1.getVolume() + d2.getVolume() + d3.getVolume()) + sc.nextLine();
+		message = message + "\n" + sc.nextLine() + d3.getMaCoPhieu() + " với " + form.getForm(d3.getVolume()) + sc.nextLine()
+				+ d2.getMaCoPhieu() + " với " + form.getForm(d2.getVolume()) + sc.nextLine() + d1.getMaCoPhieu() + " với "
+				+ form.getForm(d1.getVolume()) + sc.nextLine() + form.getForm((d1.getVolume() + d2.getVolume() + d3.getVolume())) + sc.nextLine();
 		return message;
 
 	}
@@ -54,8 +57,8 @@ public class SentenceBluechip {
 		Iterator<DataThuCong> c = listBC.iterator();
 		DataThuCong d1 = c.next(), d2 = c.next(), d3 = c.next();
 		sc.nextLine();
-		message = sc.nextLine() + d1.getMaCoPhieu() + " với " + d1.getClose() + sc.nextLine() + d2.getMaCoPhieu()
-				+ " với " + d2.getVolume() + sc.nextLine() + d3.getMaCoPhieu() + " với " + d3.getVolume()
+		message = sc.nextLine() + d1.getMaCoPhieu() + " với " + form.getForm(d1.getClose()) + sc.nextLine() + d2.getMaCoPhieu()
+				+ " với " + form.getForm(d2.getClose()) + sc.nextLine() + d3.getMaCoPhieu() + " với " + form.getForm(d3.getClose())
 				+ sc.nextLine();
 		return message;
 	}
@@ -71,8 +74,8 @@ public class SentenceBluechip {
 		Iterator<DataThuCong> c = listBC.iterator();
 		DataThuCong d1 = c.next(), d2 = c.next(), d3 = c.next();
 		sc.nextLine();
-		message = sc.nextLine() + d1.getMaCoPhieu() + " với " + d1.getClose() + sc.nextLine() + d2.getMaCoPhieu()
-				+ " với " + d2.getClose() + sc.nextLine() + d3.getMaCoPhieu() + " với " + d3.getClose() + sc.nextLine();
+		message = sc.nextLine() + d1.getMaCoPhieu() + " với " + form.getForm(d1.getClose()) + sc.nextLine() + d2.getMaCoPhieu()
+				+ " với " + form.getForm(d2.getClose()) + sc.nextLine() + d3.getMaCoPhieu() + " với " + form.getForm(d3.getClose()) + sc.nextLine();
 		return message;
 	}
 
@@ -90,7 +93,7 @@ public class SentenceBluechip {
 		DataThuCong d1 = c.next();
 		double max = Math.round((d1.getVolume() * d1.getOpen()) / 100000) / 10;
 		sc.nextLine();
-		message = sc.nextLine() + d1.getMaCoPhieu() + sc.nextLine() + max + sc.nextLine() + c.next().getMaCoPhieu()
+		message = sc.nextLine() + d1.getMaCoPhieu() + sc.nextLine() + form.getForm(max) + sc.nextLine() + c.next().getMaCoPhieu()
 				+ ", " + c.next().getMaCoPhieu() + ", " + c.next().getMaCoPhieu() + " và " + c.next().getMaCoPhieu();
 		return message;
 	}
@@ -108,8 +111,8 @@ public class SentenceBluechip {
 		Iterator<DataThuCong> c = listBC.iterator();
 		DataThuCong d1 = c.next(), d2 = c.next();
 		sc.nextLine();
-		message = sc.nextLine() + d1.getMaCoPhieu() + sc.nextLine() + (d1.getClose() - d1.getOpen()) * 1000
-				+ sc.nextLine() + d2.getMaCoPhieu() + sc.nextLine() + (d2.getClose() - d2.getOpen()) * 1000
+		message = sc.nextLine() + d1.getMaCoPhieu() + sc.nextLine() + form.getForm((d1.getClose() - d1.getOpen()) * 1000)
+				+ sc.nextLine() + d2.getMaCoPhieu() + sc.nextLine() + form.getForm((d2.getClose() - d2.getOpen()) * 1000)
 				+ sc.nextLine();
 
 		return message;
