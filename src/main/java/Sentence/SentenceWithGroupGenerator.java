@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 
-public class SentenceWithGroupGenerator implements iSentence {
+public class SentenceWithGroupGenerator {
     private String groupName;
     private ArrayList<DataThuCong> listData;
     private static DecimalFormat df2 = new DecimalFormat("#.##");
@@ -74,33 +74,4 @@ public class SentenceWithGroupGenerator implements iSentence {
         return sentence;
     }
 
-    @Override
-    public String getReferencePrice() {
-        return null;
-    }
-
-    @Override
-    public String giaCP() {
-        return null;
-    }
-
-    @Override
-    public String GiaTranSan(String dateData, String masan, String macophieu) {
-        return null;
-    }
-
-    @Override
-    public String giaCoPhieu(String dateData, String masan, String macophieu) {
-        return null;
-    }
-
-    @Override
-    public String khoiLuongGD() {
-        return null;
-    }
-
-    @Override
-    public String soSanhGD(String dateData, String masan, String macophieu) {
-        return null;
-    }
 }
