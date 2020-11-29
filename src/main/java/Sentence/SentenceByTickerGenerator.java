@@ -3,13 +3,20 @@ package Sentence;
 import Entity.DataTheoMa;
 import Helper.Yesterday;
 import static java.lang.StrictMath.abs;
-
+import java.io.*;
+import java.util.Scanner;
 import DAO.DatabaseGetter;
 
 public class SentenceByTickerGenerator implements iSentence {
 	DataTheoMa data;
+	File file;
+	Scanner sc;
 
-	public SentenceByTickerGenerator(DataTheoMa data) {
+	public SentenceByTickerGenerator(DataTheoMa data) throws FileNotFoundException {
+		String url = new File("").getAbsolutePath();
+		url = url.concat(File.separator + "Sentence" + File.separator + "cau_theo_ngay.txt");
+		file = new File(url);
+		sc = new Scanner(file);
 		this.data = data;
 	}
 
@@ -26,23 +33,39 @@ public class SentenceByTickerGenerator implements iSentence {
 			loaiThayDoi = " không đổi ";
 		} else
 			loaiThayDoi = " giảm ";
-		String sentence = "Trong phiên giao dịch ngày hôm nay, cổ phiểu " + maCoPhieu + " " +loaiThayDoi+" "+
-				+ roundedPercentageChange + "%, và có khả năng tiếp tục tăng trong tương lai";
+		sc.nextLine();
+		String sentence = sc.nextLine() + maCoPhieu + " " + loaiThayDoi + " " + +roundedPercentageChange
+				+ sc.nextLine();
 		return sentence;
 	}
 
 	public String getReferencePrice() {
-
-		String message = "Kết thúc phiên giao dịch hôm nay cổ phiếu " + data.getMaCoPhieu() + " đứng giá tham chiếu "
-				+ data.getClose() + " nghìn đồng";
+		sc.nextLine();
+		String message = sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + data.getClose() + sc.nextLine();
 		return message;
 	}
 
 	public String giaCP() {
-		String message = "Mở đầu phiên giao dịch hôm nay, cổ phiếu " + data.getMaCoPhieu() + "được bán với mức giá"
-				+ data.getOpen() + "nghìn đồng. Trong phiên giao dịch cổ phiếu " + data.getMaCoPhieu()
-				+ "có mức dao động trong khoảng " + data.getLow() + " đến " + data.getHigh()
-				+ " nghìn đồng, nhưng đến cuối ngày chốt lại con số " + data.getClose() + " nghìn đồng";
+		sc.nextLine();
+		String message = sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + +data.getOpen() + sc.nextLine()
+				+ data.getMaCoPhieu() + sc.nextLine() + data.getLow() + sc.nextLine() + data.getHigh() + sc.nextLine()
+				+ data.getClose() + sc.nextLine();
+		return message;
+	}
+
+	public String khoiLuongGD() {
+		double giatriGD = data.getOpen() * data.getVolume();
+		String giatri = new String();
+		if (giatriGD > Math.pow(10, 6)) {
+			giatriGD = Math.round(giatriGD / Math.pow(10, 5)) / 10;
+			giatri = giatriGD + " tỷ đồng";
+		} else {
+			giatriGD = Math.round(giatriGD / Math.pow(10, 2)) / 10;
+			giatri = giatriGD + " triệu đồng";
+		}
+		sc.nextLine();
+		String message = sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + data.getVolume() + sc.nextLine()
+				+ giatri;
 		return message;
 	}
 
@@ -53,9 +76,9 @@ public class SentenceByTickerGenerator implements iSentence {
 		double referencePrice = dataYesterday.getClose();
 		double tran = Math.round(referencePrice * 1.07);
 		double san = Math.round(referencePrice * 0.93);
-		String message = "Trong phiên giao dịch hôm nay, cổ phiếu " + data.getMaCoPhieu()
-				+ " có giá trần của cổ phiếu là: " + tran + " nghìn đồng, và giá sàn của cổ phiếu là: " + san
-				+ " nghìn đồng";
+		sc.nextLine();
+		String message = sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + tran + sc.nextLine() + san
+				+ sc.nextLine();
 		return message;
 	}
 
@@ -67,33 +90,12 @@ public class SentenceByTickerGenerator implements iSentence {
 		double percentageChange = abs((close - referencePrice) / referencePrice);
 		double tyle = Math.round((percentageChange * 1000)) / 10;
 		String soSanh;
-		if (close < referencePrice) {
-			soSanh = "So với ngày hôm qua, cổ phiếu " + data.getMaCoPhieu() + " giảm " + (referencePrice - close) * 1000
-					+ " đồng (" + tyle + "%)";
-		} else {
-			if (close > referencePrice) {
-				soSanh = "So với ngày hôm qua, cổ phiếu " + data.getMaCoPhieu() + " tăng " + (close - referencePrice)
-						+ " đồng (" + tyle + "%)";
-			} else {
-				soSanh = "So với ngày hôm qua, cổ phiếu vẫn giữ giá " + data.getClose() + " đồng";
-			}
-		}
+		String type = (close > referencePrice) ? " tang" : " giam";
+		sc.nextLine();
+		soSanh = sc.nextLine() + data.getMaCoPhieu() + type + " " + Math.abs((referencePrice - close)) * 1000 + sc.nextLine()
+				+ tyle + sc.nextLine();
+
 		return soSanh;
-	}
-
-	public String khoiLuongGD() {
-		String message = "Kết thúc phiên giao dịch ngày hôm nay cổ phiếu " + data.getMaCoPhieu()
-				+ " đạt khối lượng giao dịch là : " + data.getVolume() + " cổ phiếu";
-		double giatriGD = data.getOpen() * data.getVolume();
-		if (giatriGD > Math.pow(10, 6)) {
-			giatriGD = Math.round(giatriGD / Math.pow(10, 5)) / 10;
-			message = message + " tương đương gần " + giatriGD + " tỷ đồng";
-		} else {
-			giatriGD = Math.round(giatriGD / Math.pow(10, 2)) / 10;
-			message = message + " tương đương gần " + giatriGD + " triệu đồng";
-		}
-
-		return message;
 	}
 
 	public String soSanhGD(String dateData, String masan, String macophieu) {
@@ -102,15 +104,9 @@ public class SentenceByTickerGenerator implements iSentence {
 		DataTheoMa dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
 		double yesterdayKL = dataYesterday.getVolume();
 		double ss = Math.abs(data.getVolume() - yesterdayKL);
-		if (data.getVolume() > yesterdayKL) {
-			message = "So với ngày hôm qua khối lượng giao dịch cổ phiếu " + macophieu + " tăng " + ss + " cổ phiếu";
-		} else {
-			if (data.getVolume() < yesterdayKL) {
-				message = "So với ngày hôm qua khối lượng giao dịch giảm " + ss + " cổ phiếu";
-			} else {
-				message = "So với ngày hôm qua khối lượng giao dịch cổ phiếu không tăng";
-			}
-		}
+		String type = (data.getVolume() > yesterdayKL) ? " tăng " : " giảm ";
+		sc.nextLine();
+		message = sc.nextLine() + macophieu + type + ss + sc.nextLine();
 		return message;
 	}
 

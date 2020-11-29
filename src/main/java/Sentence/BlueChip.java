@@ -4,11 +4,18 @@ import java.util.*;
 import DAO.DatabaseGetter;
 
 import Entity.DataTheoMa;
+import java.io.*;
 
 public class BlueChip {
 	ArrayList<DataTheoMa> listBC;
+	File file;
+	Scanner sc;
 
-	public BlueChip(String date) {
+	public BlueChip(String date) throws FileNotFoundException {
+		String url = new File("").getAbsolutePath();
+		url = url.concat(File.separator + "Sentence" + File.separator + "blue_chip.txt");
+		file = new File(url);
+		sc = new Scanner(file);
 		listBC = new DatabaseGetter().layDataBluechip(date);
 	}
 
@@ -23,19 +30,16 @@ public class BlueChip {
 		});
 		Iterator<DataTheoMa> c = listBC.iterator();
 		DataTheoMa a1 = c.next();
-		message = "Khối lượng giao dịch hôm nay tăng mạnh, dẫn đầu các cổ phiếu trong nhóm bluechip là "
-				+ a1.getMaCoPhieu() + " với " + a1.getVolume() + " cổ phiếu , tiếp theo sau là ";
+		sc.nextLine();
+		message = sc.nextLine() + a1.getMaCoPhieu() + sc.nextLine() + a1.getVolume() + sc.nextLine();
 		for (int i = 1; i <= 8; i++) {
 			DataTheoMa d = c.next();
 			message = message + d.getMaCoPhieu() + " với " + d.getVolume() + " cổ phiếu ,";
 		}
 		DataTheoMa d1 = c.next(), d2 = c.next(), d3 = c.next();
-		message = message
-				+ "\nTrong khi đó, 3 cổ phiếu trong nhóm bluechip có khối lượng giao dịch thấp nhất là cổ phiếu "
-				+ d3.getMaCoPhieu() + " với " + d3.getVolume() + " cổ phiếu, tiếp theo sau là " + d2.getMaCoPhieu()
-				+ " với " + d2.getVolume() + " cổ phiếu " + d1.getMaCoPhieu() + " với " + d1.getVolume()
-				+ " cổ phiếu. Cả ba cổ phiếu này chỉ có " + (d1.getVolume() + d2.getVolume() + d3.getVolume())
-				+ " cổ phiếu được chuyển nhượng, chiếm tỉ lệ rất nhỏ trên thị trường";
+		message = message + "\n" + sc.nextLine() + d3.getMaCoPhieu() + " với " + d3.getVolume() + sc.nextLine()
+				+ d2.getMaCoPhieu() + " với " + d2.getVolume() + sc.nextLine() + d1.getMaCoPhieu() + " với "
+				+ d1.getVolume() + sc.nextLine() + (d1.getVolume() + d2.getVolume() + d3.getVolume()) + sc.nextLine();
 		return message;
 
 	}
@@ -51,10 +55,10 @@ public class BlueChip {
 		});
 		Iterator<DataTheoMa> c = listBC.iterator();
 		DataTheoMa d1 = c.next(), d2 = c.next(), d3 = c.next();
-		message = "\nKết thúc phiên giao dịch ngày hôm nay, Top 3 cổ phiếu trong nhóm bluechip có giá trị cổ phiếu cao nhất là "
-				+ d1.getMaCoPhieu() + " với " + d1.getClose() + " nghìn đồng, tiếp theo sau là " + d2.getMaCoPhieu()
-				+ " với " + d2.getVolume() + " nghìn đồng " + d3.getMaCoPhieu() + " với " + d3.getVolume()
-				+ " nghìn đồng";
+		sc.nextLine();
+		message = sc.nextLine() + d1.getMaCoPhieu() + " với " + d1.getClose() + sc.nextLine() + d2.getMaCoPhieu()
+				+ " với " + d2.getVolume() + sc.nextLine() + d3.getMaCoPhieu() + " với " + d3.getVolume()
+				+ sc.nextLine();
 		return message;
 	}
 
@@ -68,9 +72,9 @@ public class BlueChip {
 		});
 		Iterator<DataTheoMa> c = listBC.iterator();
 		DataTheoMa d1 = c.next(), d2 = c.next(), d3 = c.next();
-		message = "\nTrong khi đó kết thúc phiên giao dịch ngày hôm nay lại chứng kiến sự giảm sút giá trị cổ phiếu của "
-				+ d1.getMaCoPhieu() + " với " + d1.getClose() + " nghìn đồng, " + d2.getMaCoPhieu() + " với "
-				+ d2.getClose() + " nghìn đồng và" + d3.getMaCoPhieu() + " với " + d3.getClose() + " nghìn đồng.";
+		sc.nextLine();
+		message = sc.nextLine() + d1.getMaCoPhieu() + " với " + d1.getClose() + sc.nextLine() + d2.getMaCoPhieu()
+				+ " với " + d2.getClose() + sc.nextLine() + d3.getMaCoPhieu() + " với " + d3.getClose() + sc.nextLine();
 		return message;
 	}
 
@@ -87,10 +91,9 @@ public class BlueChip {
 		Iterator<DataTheoMa> c = listBC.iterator();
 		DataTheoMa d1 = c.next();
 		double max = Math.round((d1.getVolume() * d1.getOpen()) / 100000) / 10;
-		message = "\nDẫn đầu nhóm cổ phiếu bluechip về giá trị giao dịch trong ngày hôm nay là cổ phiếu "
-				+ d1.getMaCoPhieu() + " với giá trị gần " + max + " tỷ đồng, tiếp theo là các mã "
-				+ c.next().getMaCoPhieu() + ", " + c.next().getMaCoPhieu() + ", " + c.next().getMaCoPhieu() + " và "
-				+ c.next().getMaCoPhieu();
+		sc.nextLine();
+		message = sc.nextLine() + d1.getMaCoPhieu() + sc.nextLine() + max + sc.nextLine() + c.next().getMaCoPhieu()
+				+ ", " + c.next().getMaCoPhieu() + ", " + c.next().getMaCoPhieu() + " và " + c.next().getMaCoPhieu();
 		return message;
 	}
 
@@ -106,9 +109,10 @@ public class BlueChip {
 		});
 		Iterator<DataTheoMa> c = listBC.iterator();
 		DataTheoMa d1 = c.next(), d2 = c.next();
-		message = "\nSàn chứng khoán hôm nay chứng kiến sự tăng mạnh của nhóm cổ phiếu bluechip, đặc biệt là cổ phiếu "
-				+ d1.getMaCoPhieu() + "với việc tăng " + (d1.getClose() - d1.getOpen()) * 1000 + " đồng và cổ phiếu "
-				+ d2.getMaCoPhieu() + " tăng " + (d2.getClose() - d2.getOpen()) * 1000 + " đồng";
+		sc.nextLine();
+		message = sc.nextLine() + d1.getMaCoPhieu() + sc.nextLine() + (d1.getClose() - d1.getOpen()) * 1000
+				+ sc.nextLine() + d2.getMaCoPhieu() + sc.nextLine() + (d2.getClose() - d2.getOpen()) * 1000
+				+ sc.nextLine();
 
 		return message;
 	}

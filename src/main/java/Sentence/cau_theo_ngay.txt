@@ -1,0 +1,33 @@
+*generateSentence
+Trong phiên cổ phiếu ngày hôm nay, cổ phiếu 
+%, và có khả năng tăng trong tương lai
+*getReferencePrice
+Kết thúc phiên giao dịch hôm nay cổ phiếu 
+ đứng giá tham chiếu 
+ nghìn đồng
+*giaCP
+Mở đầu phiên giao dịch hôm nay, cổ phiếu 
+ được bán với mức giá 
+ nghìn đồng. Trong phiên giao dịch cổ phiếu 
+ có mức dao động trong khoảng 
+ đến 
+ nghìn đồng, nhưng đến cuối ngày chốt lại ở con số 
+ nghìn đồng
+*khối lượng giao dịch
+Kết thúc phiên giao dịch ngày hôm nay cổ phiếu 
+ đạt khối lượng giao dịch là:  
+ cổ phiếu, tương đương gần 
+*gia tri tran
+Trong phiên giao dịch ngày hôm nay, cổ phiếu 
+ có giá trị trần là: 
+ nghìn đồng, và giá trị sàn là: 
+ nghìn đồng
+*giaCoPhieu
+So với ngày hôm qua, cổ phiếu 
+ đồng ( 
+ %)
+*soSanhGD
+So với ngày hôm qua,cổ phiếu 
+ cổ phiếu 
+
+
