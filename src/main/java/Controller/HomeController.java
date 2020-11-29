@@ -78,6 +78,7 @@ public class HomeController implements Initializable {
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		databaseGetterObject = new DatabaseGetter();
 		dateValidator = new DateValidator();
+		realtimeDataGetter = new RealtimeDataGetter();
 		File file = new File("View/stockPic.jpeg");
 		Image image = new Image(file.toURI().toString());
 		imageView = new ImageView(image);

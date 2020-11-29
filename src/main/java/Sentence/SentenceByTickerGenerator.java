@@ -1,5 +1,6 @@
 package Sentence;
 
+import Entity.Data;
 import Entity.DataRealtime;
 import Entity.DataThuCong;
 import static java.lang.StrictMath.abs;
@@ -18,10 +19,7 @@ public class SentenceByTickerGenerator {
 	private FormNumber form = new FormNumber();
 
 	public SentenceByTickerGenerator(DataRealtime data) throws FileNotFoundException {
-		File file = new File("");
-		String url = file.getAbsolutePath();
-		url = url.replace("java", "resources");
-		file = new File(url+File.separator+"View"+File.separator+"cau_theo_ngay.txt");
+		File file = new File("cau_theo_ngay.txt");
 		sc = new Scanner(file);
 		this.data = data;
 	}
@@ -80,8 +78,8 @@ public class SentenceByTickerGenerator {
 	public String GiaTranSan(String dateData, String masan, String macophieu) {
 
 		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataThuCong dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
-		double referencePrice = dataYesterday.getClose();
+		DataRealtime dataYesterday = new RealtimeDataGetter().layDataTheoMa(yesterday, masan, macophieu);
+		double referencePrice = dataYesterday.getGiaDongCua();
 		double tran = Math.round(referencePrice * 1.07);
 		double san = Math.round(referencePrice * 0.93);
 		sc.nextLine();
@@ -92,8 +90,8 @@ public class SentenceByTickerGenerator {
 
 	public String giaCoPhieu(String dateData, String masan, String macophieu) {
 		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataThuCong dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
-		double referencePrice = dataYesterday.getClose();
+		DataRealtime dataYesterday = new RealtimeDataGetter().layDataTheoMa(yesterday, masan, macophieu);
+		double referencePrice = dataYesterday.getGiaDongCua();
 		double close = data.getGiaDongCua();
 		double percentageChange = abs((close - referencePrice) / referencePrice);
 		double tyle = Math.round((percentageChange * 1000)) / 10;

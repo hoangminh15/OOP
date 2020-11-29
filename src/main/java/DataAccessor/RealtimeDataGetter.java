@@ -62,8 +62,8 @@ public class RealtimeDataGetter extends DataGetter implements iResultSetter, iDa
             //Lay data neu nhu bang chua ton tai
             fetchDataRealtimeAndPutInDatabase(maSan);
             try {
-                rs.next();
                 rs = statement.executeQuery(querySQL);
+                rs.next();
                 setFromResultSet(rs);
             } catch (SQLException e) {
                 e.printStackTrace();
