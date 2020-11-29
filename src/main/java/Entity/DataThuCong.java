@@ -1,6 +1,6 @@
 package Entity;
 
-public class DataTheoMa {
+public class DataThuCong extends Data{
 
     private String maCoPhieu;
     private String date;
@@ -11,11 +11,11 @@ public class DataTheoMa {
     private double volume;
     private String san;
 
-    public DataTheoMa(){
+    public DataThuCong(){
 
     }
 
-    public DataTheoMa(String maCoPhieu, String date, double open, double high, double low, double close, double volume) {
+    public DataThuCong(String maCoPhieu, String date, double open, double high, double low, double close, double volume) {
         this.maCoPhieu = maCoPhieu;
         this.date = date;
         this.open = open;

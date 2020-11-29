@@ -1,6 +1,6 @@
 package Sentence;
 
-import Entity.DataTheoMa;
+import Entity.DataThuCong;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,10 +11,10 @@ import java.text.DecimalFormat;
 
 public class SentenceWithGroupGenerator implements iSentence {
     private String groupName;
-    private ArrayList<DataTheoMa> listData;
+    private ArrayList<DataThuCong> listData;
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
-    public SentenceWithGroupGenerator(String groupName, ArrayList<DataTheoMa> listData){
+    public SentenceWithGroupGenerator(String groupName, ArrayList<DataThuCong> listData){
         df2.setRoundingMode(RoundingMode.DOWN);
         this.groupName = groupName;
         this.listData = listData;
@@ -27,7 +27,7 @@ public class SentenceWithGroupGenerator implements iSentence {
         if(listHanoi.size() > 0){
             sentence += "Sàn Hà Nội :\n\n";
             HashMap<String, String> listHanoiTheoNgay = new HashMap<>();
-            for (DataTheoMa item : listHanoi){
+            for (DataThuCong item : listHanoi){
                 double chenhlech = Math.abs((item.getOpen() - item.getClose())/item.getOpen()*100);
                 if(listHanoiTheoNgay.containsKey(item.getDate())){
                     String quote = ", " + item.getMaCoPhieu() + " ("+df2.format(chenhlech)+"% )";
@@ -52,7 +52,7 @@ public class SentenceWithGroupGenerator implements iSentence {
         if(listSaiGon.size() > 0){
             sentence += "Sàn Hồ Chí Minh :\n\n";
             HashMap<String, String> listSaiGonTheoNgay = new HashMap<>();
-            for (DataTheoMa item : listSaiGon){
+            for (DataThuCong item : listSaiGon){
                 double chenhlech = Math.abs((item.getOpen() - item.getClose())/item.getOpen()*100);
                 if(listSaiGonTheoNgay.containsKey(item.getDate())){
                     String quote = ", " + item.getMaCoPhieu() + " ("+df2.format(chenhlech)+"% )";

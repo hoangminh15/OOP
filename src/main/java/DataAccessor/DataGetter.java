@@ -28,8 +28,6 @@ public abstract class DataGetter {
     double low;
     double volume;
 
-
-
     String nam;
     String ngay;
     String thang;

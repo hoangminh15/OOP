@@ -1,6 +1,6 @@
 package Sentence;
 
-import Entity.DataTheoMa;
+import Entity.DataThuCong;
 import static java.lang.StrictMath.abs;
 import java.io.*;
 import java.util.Scanner;
@@ -8,11 +8,11 @@ import DataAccessor.DatabaseGetter;
 import Helper.YesterdayFinder;
 
 public class SentenceByTickerGenerator {
-	DataTheoMa data;
+	DataThuCong data;
 	File file;
 	Scanner sc;
 
-	public SentenceByTickerGenerator(DataTheoMa data) throws FileNotFoundException {
+	public SentenceByTickerGenerator(DataThuCong data) throws FileNotFoundException {
 		file = new File("cau_theo_ngay.txt");
 		sc = new Scanner(file);
 		this.data = data;
@@ -70,7 +70,7 @@ public class SentenceByTickerGenerator {
 	public String GiaTranSan(String dateData, String masan, String macophieu) {
 
 		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataTheoMa dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
+		DataThuCong dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
 		double referencePrice = dataYesterday.getClose();
 		double tran = Math.round(referencePrice * 1.07);
 		double san = Math.round(referencePrice * 0.93);
@@ -82,7 +82,7 @@ public class SentenceByTickerGenerator {
 
 	public String giaCoPhieu(String dateData, String masan, String macophieu) {
 		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataTheoMa dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
+		DataThuCong dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
 		double referencePrice = dataYesterday.getClose();
 		double close = data.getClose();
 		double percentageChange = abs((close - referencePrice) / referencePrice);
@@ -99,7 +99,7 @@ public class SentenceByTickerGenerator {
 	public String soSanhGD(String dateData, String masan, String macophieu) {
 		String message;
 		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataTheoMa dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
+		DataThuCong dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
 		double yesterdayKL = dataYesterday.getVolume();
 		double ss = Math.abs(data.getVolume() - yesterdayKL);
 		String type = (data.getVolume() > yesterdayKL) ? " tăng " : " giảm ";

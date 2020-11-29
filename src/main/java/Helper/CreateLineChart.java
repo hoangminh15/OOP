@@ -1,6 +1,6 @@
 package Helper;
 
-import Entity.DataTheoMa;
+import Entity.DataThuCong;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.util.StringConverter;
@@ -10,7 +10,7 @@ import java.util.Collections;
 import java.util.Comparator;
 
 public class CreateLineChart {
-    public static ArrayList<XYChart.Series<Number,Number>> createLines(NumberAxis xAxis, NumberAxis yAxis, ArrayList<DataTheoMa> listData){
+    public static ArrayList<XYChart.Series<Number,Number>> createLines(NumberAxis xAxis, NumberAxis yAxis, ArrayList<DataThuCong> listData){
         ArrayList<XYChart.Series<Number, Number>> listLines = new ArrayList<XYChart.Series<Number, Number>>();
 
         XYChart.Series<Number, Number> seriesOpen = new XYChart.Series<>();
@@ -27,7 +27,7 @@ public class CreateLineChart {
 
         Collections.sort(listData, (o1, o2) -> Integer.parseInt(o1.getDate()) <  Integer.parseInt(o2.getDate()) ? 1 : -1);
 
-        for(DataTheoMa item: listData){
+        for(DataThuCong item: listData){
             seriesOpen.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getOpen()));
             seriesClose.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getClose()));
             seriesHigh.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getHigh()));
@@ -54,8 +54,8 @@ public class CreateLineChart {
         });
 
         yAxis.setAutoRanging(false);
-        DataTheoMa max = Collections.max(listData, Comparator.comparing(s -> s.getHigh()));
-        DataTheoMa min = Collections.min(listData, Comparator.comparing(s -> s.getLow()));
+        DataThuCong max = Collections.max(listData, Comparator.comparing(s -> s.getHigh()));
+        DataThuCong min = Collections.min(listData, Comparator.comparing(s -> s.getLow()));
         yAxis.setUpperBound(max.getHigh());
         yAxis.setLowerBound(min.getLow());
         yAxis.setTickUnit(0.1);

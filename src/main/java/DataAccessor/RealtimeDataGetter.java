@@ -13,7 +13,7 @@ import java.util.Arrays;
 
 import static java.util.stream.Collectors.joining;
 
-public class RealtimeDataGetter extends DataGetter implements iResultSetter {
+public class RealtimeDataGetter extends DataGetter implements iResultSetter, iDataFetcher {
 
     private String maCoPhieu;
     private double giaDongCua;

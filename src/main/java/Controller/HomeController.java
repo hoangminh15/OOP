@@ -3,7 +3,7 @@ package Controller;
 
 import DataAccessor.RealtimeDataGetter;
 import Entity.DataRealtime;
-import Entity.DataTheoMa;
+import Entity.DataThuCong;
 import Helper.CreateLineChart;
 import Helper.DateValidator;
 import DataAccessor.DatabaseGetter;
@@ -123,7 +123,7 @@ public class HomeController implements Initializable {
             String maSan = sanText.getValue().toUpperCase();
             if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
                 chart.setTitle("Mã " + maCoPhieu + " trong sàn " + maSan);
-                ArrayList<DataTheoMa> listData = databaseGetterObject.layDataTheoMaNhieuNgay(maSan, maCoPhieu);
+                ArrayList<DataThuCong> listData = databaseGetterObject.layDataTheoMaNhieuNgay(maSan, maCoPhieu);
 
                 ArrayList<XYChart.Series<Number, Number>> listLines =
                         CreateLineChart.createLines(timeAxis, valueAxis, listData);
@@ -194,7 +194,7 @@ public class HomeController implements Initializable {
 
         // Method check maCoPhieu co thuoc maSan khong
         if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
-            DataTheoMa data = databaseGetterObject.layDataTheoMa(dateData, maSan, maCoPhieu);
+            DataThuCong data = databaseGetterObject.layDataTheoMa(dateData, maSan, maCoPhieu);
             // Sinh cau
             sentenceByTickerGenerator = new SentenceByTickerGenerator(data);
             String text = sentenceByTickerGenerator.generateSentence() + "\n"
