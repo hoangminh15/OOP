@@ -1,13 +1,13 @@
 package Sentence;
 
 import Entity.DataRealtime;
-import Entity.DataThuCong;
+
 import static java.lang.StrictMath.abs;
 import Helper.FormNumber;
 import java.io.*;
 import java.util.Scanner;
 
-import DataAccessor.DatabaseGetter;
+
 import DataAccessor.RealtimeDataGetter;
 import Helper.YesterdayFinder;
 
@@ -18,10 +18,7 @@ public class SentenceByTickerGenerator {
 	private FormNumber form = new FormNumber();
 
 	public SentenceByTickerGenerator(DataRealtime data) throws FileNotFoundException {
-		File file = new File("");
-		String url = file.getAbsolutePath();
-		url = url.replace("java", "resources");
-		file = new File(url+File.separator+"View"+File.separator+"cau_theo_ngay.txt");
+		File file = new File("cau_theo_ngay.txt");
 		sc = new Scanner(file);
 		this.data = data;
 	}
@@ -34,11 +31,11 @@ public class SentenceByTickerGenerator {
 		String maCoPhieu = data.getMaCoPhieu();
 		String loaiThayDoi;
 		if (close > open) {
-			loaiThayDoi = " tăng ";
+			loaiThayDoi = "tăng";
 		} else if (close == open) {
-			loaiThayDoi = " không đổi ";
+			loaiThayDoi = "không đổi";
 		} else
-			loaiThayDoi = " giảm ";
+			loaiThayDoi = "giảm";
 		sc.nextLine();
 		String sentence = sc.nextLine() + maCoPhieu + " " + loaiThayDoi + " " + +roundedPercentageChange
 				+ sc.nextLine();
@@ -77,13 +74,10 @@ public class SentenceByTickerGenerator {
 		return message;
 	}
 
-	public String GiaTranSan(String dateData, String masan, String macophieu) {
-
-		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataThuCong dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
-		double referencePrice = dataYesterday.getClose();
-		double tran = Math.round(referencePrice * 1.07);
-		double san = Math.round(referencePrice * 0.93);
+	public String GiaTranSan() {
+		double referencePrice = data.getGiaThamChieu();
+		double tran = referencePrice * 1.07;
+		double san = referencePrice * 0.93;
 		sc.nextLine();
 		String message = sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() +form.getForm(tran) + sc.nextLine() + form.getForm(san)
 				+ sc.nextLine();
@@ -92,16 +86,16 @@ public class SentenceByTickerGenerator {
 
 	public String giaCoPhieu(String dateData, String masan, String macophieu) {
 		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataThuCong dataYesterday = new DatabaseGetter().layDataTheoMa(yesterday, masan, macophieu);
-		double referencePrice = dataYesterday.getClose();
+		DataRealtime dataYesterday = new RealtimeDataGetter().layDataTheoMa(yesterday, masan, macophieu);
+		double referencePrice = dataYesterday.getGiaDongCua();
 		double close = data.getGiaDongCua();
 		double percentageChange = abs((close - referencePrice) / referencePrice);
 		double tyle = Math.round((percentageChange * 1000)) / 10;
 		String soSanh;
-		String type = (close > referencePrice) ? " tang" : " giam";
+		String type = (close > referencePrice) ? " tăng" : " giảm";
 		sc.nextLine();
-		soSanh = sc.nextLine() + data.getMaCoPhieu() + type + " " + Math.abs((referencePrice - close)) * 1000
-				+ sc.nextLine() + tyle + sc.nextLine();
+		soSanh = sc.nextLine() + data.getMaCoPhieu() + type + " " + form.getForm(Math.abs((referencePrice - close)) * 1000)
+				+ sc.nextLine() + form.getForm(tyle) + sc.nextLine();
 
 		return soSanh;
 	}
