@@ -199,8 +199,8 @@ public class HomeController implements Initializable {
 			// Sinh cau
 			sentenceByTickerGenerator = new SentenceByTickerGenerator(data);
 			String text = sentenceByTickerGenerator.generateSentence() + "\n"
-					+ sentenceByTickerGenerator.getReferencePrice() + "\n" + sentenceByTickerGenerator.khoiLuongGD()
-					+ "\n" + sentenceByTickerGenerator.giaCP() + "\n"
+					+ sentenceByTickerGenerator.getReferencePrice() + "\n" + sentenceByTickerGenerator.giaCP()
+					+ "\n" + sentenceByTickerGenerator.khoiLuongGD() + "\n"
 					+ sentenceByTickerGenerator.GiaTranSan() + "\n"
 					+ sentenceByTickerGenerator.giaCoPhieu(dateData, maSan, maCoPhieu) + "\n"
 					+ sentenceByTickerGenerator.soSanhGD(dateData, maSan, maCoPhieu);
