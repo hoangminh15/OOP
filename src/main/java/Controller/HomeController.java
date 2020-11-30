@@ -201,7 +201,7 @@ public class HomeController implements Initializable {
 			String text = sentenceByTickerGenerator.generateSentence() + "\n"
 					+ sentenceByTickerGenerator.getReferencePrice() + "\n" + sentenceByTickerGenerator.khoiLuongGD()
 					+ "\n" + sentenceByTickerGenerator.giaCP() + "\n"
-					+ sentenceByTickerGenerator.GiaTranSan(dateData, maSan, maCoPhieu) + "\n"
+					+ sentenceByTickerGenerator.GiaTranSan() + "\n"
 					+ sentenceByTickerGenerator.giaCoPhieu(dateData, maSan, maCoPhieu) + "\n"
 					+ sentenceByTickerGenerator.soSanhGD(dateData, maSan, maCoPhieu);
 			banTinText.setText(text);
