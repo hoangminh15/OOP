@@ -34,16 +34,19 @@ public class DataGetter {
     //Strategy Pattern
     DataTheoMaFetcher dataTheoMaFetcher;
 
-    public DataTheoMaFetcher getDataTheoMaFetcher() {
-        return dataTheoMaFetcher;
-    }
-
     public void setDataTheoMaFetcher(DataTheoMaFetcher dataTheoMaFetcher) {
         this.dataTheoMaFetcher = dataTheoMaFetcher;
     }
 
-    public Data thucHienLayDataTheoMa(String namThangNgay, String maSan, String maCoPhieu) throws SQLException, ClassNotFoundException {
-        Data data = dataTheoMaFetcher.layDataTheoMa(namThangNgay, maSan, maCoPhieu);
+    public Data thucHienLayDataTheoMa(String namThangNgay, String maSan, String maCoPhieu){
+        Data data = null;
+        try {
+            data = dataTheoMaFetcher.layDataTheoMa(namThangNgay, maSan, maCoPhieu);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         return data;
     }
 

@@ -1,5 +1,7 @@
 package DataAccessor;
 
+import javafx.scene.control.Alert;
+
 public class TickerValidator extends DataGetter {
 
     boolean isExisting = true;
@@ -17,6 +19,9 @@ public class TickerValidator extends DataGetter {
                 isExisting = false;
         } catch (Exception e) {
             e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setContentText("Bạn hãy nhập đầy đủ thông tin");
+            alert.show();
         }
         return isExisting;
     }

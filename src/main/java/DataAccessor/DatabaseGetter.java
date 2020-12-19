@@ -28,8 +28,9 @@ public class DatabaseGetter extends DataGetter {
 
 
 
-    public ArrayList<DataThuCong> layDataTheoMaNhieuNgay(String maSan, String maCoPhieu){
+    public ArrayList<DataThuCong> layDataTheoMaNhieuNgay(String namThangNgay, String maSan, String maCoPhieu){
         ArrayList<String> listTables= new ArrayList<>();
+        //Chuyen data thanh list cac ngay trong table
         listTables.add("CafeF.HNX.02.11.2020");
         listTables.add("CafeF.HNX.03.11.2020");
         listTables.add("CafeF.HNX.04.11.2020");

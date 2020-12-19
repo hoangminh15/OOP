@@ -130,7 +130,7 @@ public class HomeController implements Initializable {
 			String maSan = sanText.getValue().toUpperCase();
 			if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
 				chart.setTitle("Mã " + maCoPhieu + " trong sàn " + maSan);
-				ArrayList<DataThuCong> listData = databaseGetterObject.layDataTheoMaNhieuNgay(maSan, maCoPhieu);
+				ArrayList<DataThuCong> listData = databaseGetterObject.layDataTheoMaNhieuNgay(dateData, maSan, maCoPhieu);
 
 				ArrayList<XYChart.Series<Number, Number>> listLines = CreateLineChart.createLines(timeAxis, valueAxis,
 						listData);
@@ -195,7 +195,7 @@ public class HomeController implements Initializable {
 
 	// Listener cho xemTheoMaButton
 	public void xemTheoMa(ActionEvent event) throws Exception {
-		if ((sanText.getValue().equals("")) || (maText.getText().equals("")) || (dateData.isBlank())) {
+		if ((sanText.getValue().isBlank()) || (maText.getText().isBlank()) || (dateData.isBlank())) {
 			popUpMissingField();
 		}
 		String maCoPhieu = maText.getText().toUpperCase();
@@ -218,7 +218,6 @@ public class HomeController implements Initializable {
 	}
 
 	public void xemTangManh(ActionEvent event) throws Exception {
-		realtimeDataGetter = new RealtimeDataGetter();
 		DataRealtime dataRealtime = realtimeDataGetter.layDataTheoMa("20201103", "HSX", "VNM");
 	}
 
@@ -226,7 +225,7 @@ public class HomeController implements Initializable {
 
 	}
 
-	public void checkExistence(String maCoPhieu, String maSan) throws FileNotFoundException, SQLException, ClassNotFoundException {
+	public void checkExistence(String maCoPhieu, String maSan) throws FileNotFoundException{
 		if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
 			dataGetter = new DataGetter();
 			dataGetter.setDataTheoMaFetcher(new DataTheoMaRealtime());

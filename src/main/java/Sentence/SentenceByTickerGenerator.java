@@ -1,5 +1,7 @@
 package Sentence;
 
+import DataAccessor.DataGetter;
+import DataService.DataTheoMaRealtime;
 import Entity.Data;
 import Entity.DataRealtime;
 
@@ -79,7 +81,9 @@ public class SentenceByTickerGenerator {
 	public String GiaTranSan(String dateData, String masan, String macophieu) {
 
 		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataRealtime dataYesterday = new RealtimeDataGetter().layDataTheoMa(yesterday, masan, macophieu);
+		DataGetter dataGetter = new DataGetter();
+		dataGetter.setDataTheoMaFetcher(new DataTheoMaRealtime());
+		DataRealtime dataYesterday = (DataRealtime) dataGetter.thucHienLayDataTheoMa(yesterday, masan, macophieu);
 		double referencePrice = dataYesterday.getGiaDongCua();
 		double tran = Math.round(referencePrice * 1.07);
 		double san = Math.round(referencePrice * 0.93);

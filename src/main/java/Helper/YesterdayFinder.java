@@ -29,7 +29,7 @@ public class YesterdayFinder {
 	}
 
 	public String findYesterday(String date) {
-		int dayFeb = 0, nam, thang, ngay;
+		int dayFeb, nam, thang, ngay;
 		nam = Integer.parseInt(date.substring(0, 4));
 		thang = Integer.parseInt(date.substring(4, 6));
 		ngay = Integer.parseInt(date.substring(6));

@@ -44,6 +44,7 @@ public class DataTheoMaRealtime implements DataTheoMaFetcher{
         nam = namThangNgay.substring(0, 4);
         thang = namThangNgay.substring(4, 6);
         ngay = namThangNgay.substring(6);
+        formatDate(ngay, thang);
         if (maSanNotConvertedYet.equals("HSX")){
             maSan = "HOSE";
         } else if(maSanNotConvertedYet.equals("HNX")){
@@ -146,5 +147,17 @@ public class DataTheoMaRealtime implements DataTheoMaFetcher{
         giaThapNhat = Double.parseDouble(rs.getString("giaThapNhat"));
         klgdKhopLenh = Long.parseLong(rs.getString("klgdKhopLenh"));
         gtgdKhopLenh = Long.parseLong(rs.getString("gtgdKhopLenh"));
+    }
+
+    public void formatDate(String ngay, String thang) {
+        if(!ngay.startsWith("0")) {
+            if (Integer.parseInt(ngay) < 10) {
+                this.ngay = "0" + ngay;
+            }
+        }
+
+        if (Integer.parseInt(thang) < 10) {
+            this.thang = "0" + thang;
+        }
     }
 }
