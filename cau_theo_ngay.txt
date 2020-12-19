@@ -6,16 +6,16 @@ Kết thúc phiên giao dịch hôm nay cổ phiếu
  đứng giá tham chiếu 
  nghìn đồng
 *giaCP
-Mở đầu phiên giao dịch hôm nay, cổ phiếu 
+Mở đầu phiên giao dịch ngày hôm nay, cổ phiếu 
  được bán với mức giá 
- nghìn đồng. Trong phiên giao dịch cổ phiếu 
+ nghìn đồng. Trong khi đó cổ phiếu 
  có mức dao động trong khoảng 
- đến 
+ nghìn đồng đến 
  nghìn đồng, nhưng đến cuối ngày chốt lại ở con số 
  nghìn đồng
 *khối lượng giao dịch
 Kết thúc phiên giao dịch ngày hôm nay cổ phiếu 
- đạt khối lượng giao dịch là:  
+ đạt khối lượng giao dịch là: 
  cổ phiếu, tương đương gần 
 *gia tri tran
 Trong phiên giao dịch ngày hôm nay, cổ phiếu 

@@ -8,21 +8,21 @@ Trong khi đó, 3 cổ phiếu trong nhóm bluechip có khối lượng giao d�
  cổ phiếu. Cả ba cổ phiếu này chỉ có 
  cổ phiếu được chuyển nhượng, chiếm tỷ lệ rất nhỏ trên thị trường.
 *highGiaTri
-\nKết thúc phiên giao dịch hôm nay, Top 3 cổ phiếu trong nhóm bluechip có giá trị cổ phiếu cao nhất là: 
+Kết thúc phiên giao dịch hôm nay, Top 3 cổ phiếu trong nhóm bluechip có giá trị cổ phiếu cao nhất là: 
  nghìn đồng, tiếp theo là 
  nghìn đồng,  
  nghìn đồng 
 *lowGiaTri
-\nTrong khi đó, kết thúc phiên giao dịch ngày hôm nay lại chứng kiến sự giảm sút giá trị cổ phiếu của 
+Trong khi đó, kết thúc phiên giao dịch ngày hôm nay lại chứng kiến sự giảm sút giá trị cổ phiếu của 
  nghìn đồng, 
  nghìn đồng, 
  nghìn đồng.
 *highGTGD
-\nDẫn đầu nhóm cổ phiếu bluechip về giao dịch trong ngày hôm nay là cổ phiếu: 
+Dẫn đầu nhóm cổ phiếu bluechip về giao dịch trong ngày hôm nay là cổ phiếu: 
  với giá trị gần 
  tỷ đồng, tiếp theo là các cổ phiếu 
 *tăng mạnh
-\nSàn chứng khoán hôm nay chứng kiến sự tăng mạnh của nhóm cổ phiếu bluechip, đặc biệt là cổ phiếu 
+Sàn chứng khoán hôm nay chứng kiến sự tăng mạnh của nhóm cổ phiếu bluechip, đặc biệt là cổ phiếu 
  với việc tăng 
  đồng, và cổ phiếu 
  tăng 

@@ -23,6 +23,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.text.Font;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -195,24 +196,11 @@ public class HomeController implements Initializable {
 		String maSan = sanText.getValue().toUpperCase();
 
 		// Method check maCoPhieu co thuoc maSan khong
-		if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
-			DataRealtime data = realtimeDataGetter.layDataTheoMa(dateData, maSan, maCoPhieu);
-			// Sinh cau
-			sentenceByTickerGenerator = new SentenceByTickerGenerator(data);
-			String text = sentenceByTickerGenerator.generateSentence() + "\n"
-					+ sentenceByTickerGenerator.getReferencePrice() + "\n" + sentenceByTickerGenerator.khoiLuongGD()
-					+ "\n" + sentenceByTickerGenerator.giaCP() + "\n"
-					+ sentenceByTickerGenerator.GiaTranSan(dateData, maSan, maCoPhieu) + "\n"
-					+ sentenceByTickerGenerator.giaCoPhieu(dateData, maSan, maCoPhieu) + "\n"
-					+ sentenceByTickerGenerator.soSanhGD(dateData, maSan, maCoPhieu);
-			banTinText.setText(text);
-
-		} else {
-			popUpInvalidTicker();
-		}
+		checkExistence(maCoPhieu, maSan);
 		// Get data
-
 	}
+
+
 
 	// Listener cho Bluechip
 	public void xemBluechip(ActionEvent event) throws Exception {
@@ -230,6 +218,24 @@ public class HomeController implements Initializable {
 
 	public void xemGiamManh(ActionEvent event) {
 
+	}
+
+	public void checkExistence(String maCoPhieu, String maSan) throws FileNotFoundException {
+		if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
+			DataRealtime data = realtimeDataGetter.layDataTheoMa(dateData, maSan, maCoPhieu);
+			// Sinh cau
+			sentenceByTickerGenerator = new SentenceByTickerGenerator(data);
+			String text = sentenceByTickerGenerator.generateSentence() + "\n"
+					+ sentenceByTickerGenerator.getReferencePrice() + "\n" + sentenceByTickerGenerator.giaCP()
+					+ "\n" + sentenceByTickerGenerator.khoiLuongGD() + "\n"
+					+ sentenceByTickerGenerator.GiaTranSan(dateData, maSan, maCoPhieu) + "\n"
+					+ sentenceByTickerGenerator.giaCoPhieu(dateData, maSan, maCoPhieu) + "\n"
+					+ sentenceByTickerGenerator.soSanhGD(dateData, maSan, maCoPhieu);
+			banTinText.setText(text);
+
+		} else {
+			popUpInvalidTicker();
+		}
 	}
 
 	public void popUpMissingField() {
