@@ -1,13 +1,12 @@
 package DataAccessor;
 
+import DataService.DataTheoMaFetcher;
+import Entity.Data;
 import javafx.scene.control.Alert;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.Statement;
+import java.sql.*;
 
-public abstract class DataGetter {
+public class DataGetter {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
     static final String DB_URL = "jdbc:mysql://localhost:3306/StockData";
 
@@ -31,6 +30,22 @@ public abstract class DataGetter {
     String nam;
     String ngay;
     String thang;
+
+    //Strategy Pattern
+    DataTheoMaFetcher dataTheoMaFetcher;
+
+    public DataTheoMaFetcher getDataTheoMaFetcher() {
+        return dataTheoMaFetcher;
+    }
+
+    public void setDataTheoMaFetcher(DataTheoMaFetcher dataTheoMaFetcher) {
+        this.dataTheoMaFetcher = dataTheoMaFetcher;
+    }
+
+    public Data thucHienLayDataTheoMa(String namThangNgay, String maSan, String maCoPhieu) throws SQLException, ClassNotFoundException {
+        Data data = dataTheoMaFetcher.layDataTheoMa(namThangNgay, maSan, maCoPhieu);
+        return data;
+    }
 
     public void thietLapKetNoi() {
 

@@ -1,7 +1,10 @@
 
 package Controller;
 
+import DataAccessor.DataGetter;
 import DataAccessor.RealtimeDataGetter;
+import DataService.DataTheoMaFetcher;
+import DataService.DataTheoMaRealtime;
 import Entity.DataRealtime;
 import Entity.DataThuCong;
 import Helper.CreateLineChart;
@@ -25,6 +28,7 @@ import javafx.scene.text.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
+import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -74,6 +78,8 @@ public class HomeController implements Initializable {
 	SentenceByTickerGenerator sentenceByTickerGenerator;
 	SentenceBluechip bluechip;
 	RealtimeDataGetter realtimeDataGetter;
+
+	DataGetter dataGetter;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -220,9 +226,11 @@ public class HomeController implements Initializable {
 
 	}
 
-	public void checkExistence(String maCoPhieu, String maSan) throws FileNotFoundException {
+	public void checkExistence(String maCoPhieu, String maSan) throws FileNotFoundException, SQLException, ClassNotFoundException {
 		if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
-			DataRealtime data = realtimeDataGetter.layDataTheoMa(dateData, maSan, maCoPhieu);
+			dataGetter = new DataGetter();
+			dataGetter.setDataTheoMaFetcher(new DataTheoMaRealtime());
+			DataRealtime data = (DataRealtime) dataGetter.thucHienLayDataTheoMa(dateData, maSan, maCoPhieu);
 			// Sinh cau
 			sentenceByTickerGenerator = new SentenceByTickerGenerator(data);
 			String text = sentenceByTickerGenerator.generateSentence() + "\n"

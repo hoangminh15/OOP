@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
-public class DatabaseGetter extends DataGetter implements iResultSetter,iDataFetcher{
+public class DatabaseGetter extends DataGetter {
 
 
     public DatabaseGetter() {
@@ -26,21 +26,7 @@ public class DatabaseGetter extends DataGetter implements iResultSetter,iDataFet
         }
     }
 
-    //Lay data the theo ma, san va ngay
-    public DataThuCong layDataTheoMa(String date, String maSan, String maCoPhieu) {
-        //Query theo ngay - san - ma
-        formatDate(date);
-        String sql = "SELECT * FROM StockData.`CafeF." + maSan + "." + ngay + "." + thang + "." + nam + "` WHERE `<Ticker>` = '" + maCoPhieu + "'";
-        try {
-            rs = statement.executeQuery(sql);
-            rs.next();
-            setFromResultSet(rs);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        //Tra ve object chua data
-        return new DataThuCong(ticker, dateTime, open, high, low, close, volume);
-    }
+
 
     public ArrayList<DataThuCong> layDataTheoMaNhieuNgay(String maSan, String maCoPhieu){
         ArrayList<String> listTables= new ArrayList<>();

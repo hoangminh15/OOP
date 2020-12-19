@@ -1,5 +1,6 @@
-package DataAccessor;
+package DataService;
 
+import Entity.Data;
 import Entity.DataRealtime;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -7,13 +8,12 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import java.io.IOException;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Arrays;
+import java.sql.Statement;
 
-import static java.util.stream.Collectors.joining;
-
-public class RealtimeDataGetter extends DataGetter {
+public class DataTheoMaRealtime implements DataTheoMaFetcher{
 
     private String maCoPhieu;
     private double giaDongCua;
@@ -30,12 +30,14 @@ public class RealtimeDataGetter extends DataGetter {
     private String thang;
     private String maSan;
 
-    public RealtimeDataGetter() {
-        thietLapKetNoi();
-    }
+    Statement statement;
+    ResultSet rs;
 
+    @Override
     //Lấy data phục vụ sinh câu.
-    public DataRealtime layDataTheoMa(String namThangNgay, String maSanNotConvertedYet, String maCoPhieu){
+    public Data layDataTheoMa(String namThangNgay, String maSanNotConvertedYet, String maCoPhieu) throws SQLException, ClassNotFoundException {
+        Connection connection = MySQLConnection.getMySQLConnection();
+        statement = connection.createStatement();
         //Chuyen doi ma san nguoi dung nhap vao sang ma san tuong duong. (HSX = HOSE; HNX = HASTC)
         String maSan = "";
         //ex: namThangNgay: 20201109
@@ -73,7 +75,8 @@ public class RealtimeDataGetter extends DataGetter {
         } catch(Exception e){
             e.printStackTrace();
         }
-        return new DataRealtime(maCoPhieu,  giaDongCua,  thayDoi,  giaThamChieu,  giaMoCua,  giaCaoNhat,  giaThapNhat,  klgdKhopLenh,  gtgdKhopLenh);
+        Data data =  new DataRealtime(maCoPhieu,  giaDongCua,  thayDoi,  giaThamChieu,  giaMoCua,  giaCaoNhat,  giaThapNhat,  klgdKhopLenh,  gtgdKhopLenh);
+        return data;
 
     }
 
