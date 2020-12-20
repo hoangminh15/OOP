@@ -42,7 +42,6 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button layoutX="74.0" layoutY="465.0" mnemonicParsing="false" styleClass="xemButton" text="Xem" />
             <TextField fx:id="maText" layoutX="9.0" layoutY="192.0" />
             <Line endX="100.0" layoutX="103.0" layoutY="274.0" startX="-100.0" />
             <ComboBox fx:id="sanText" editable="true" layoutX="11.0" layoutY="136.0" prefWidth="150.0" visibleRowCount="3" />

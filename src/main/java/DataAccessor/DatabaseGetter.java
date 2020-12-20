@@ -20,68 +20,6 @@ public class DatabaseGetter extends DataGetter {
         thietLapKetNoi();
     }
 
-    public void formatDate(String date) {
-        nam = date.substring(0, 4);
-        thang = date.substring(4, 6);
-        ngay = date.substring(6);
-        if (Integer.valueOf(ngay) < 10) {
-            ngay = "0" + ngay;
-        }
-        if (Integer.valueOf(thang) < 10){
-            thang = "0" + thang;
-        }
-    }
-
-
-    //Chuyen doi ma san de luu vao database
-    public String validateMaSan(String maSan){
-        if (maSan.equals("HSX")){
-            maSan = "HOSE";
-        } else if(maSan.equals("HNX")){
-            maSan = "HASTC";
-        } else if(maSan.equals("VN30")){
-            maSan = "VN30";
-        }
-        return maSan;
-    }
-
-    public ArrayList<DataThuCong> layDataTheoMaNhieuNgay(String namThangNgay, String maSan, String maCoPhieu){
-        String nam = namThangNgay.substring(0, 4);
-        String thang = namThangNgay.substring(4, 6);
-        String ngay = namThangNgay.substring(6);
-        String ngayThangNam = ngay + thang + nam;
-
-        //Convert maSan cho phu hop voi database
-//        maSan = validateMaSan(maSan);
-
-        ArrayList<String> listTables= new ArrayList<>();
-        //Chuyen data thanh list cac ngay trong table
-        listTables.add("CafeF.HNX.02.11.2020");
-        listTables.add("CafeF.HNX.03.11.2020");
-        listTables.add("CafeF.HNX.04.11.2020");
-        listTables.add("CafeF.HNX.29.10.2020");
-        listTables.add("CafeF.HNX.30.10.2020");
-        listTables.add("CafeF.HSX.02.11.2020");
-        listTables.add("CafeF.HSX.03.11.2020");
-        listTables.add("CafeF.HSX.30.10.2020");
-
-        ArrayList<DataThuCong> listData = new ArrayList<>();
-        for (String item: listTables) {
-            if(item.contains(maSan)){
-                String sql = "SELECT * FROM StockData.`" + item +"` WHERE `<Ticker>` = '" + maCoPhieu + "'";
-                try {
-                    rs = statement.executeQuery(sql);
-                    rs.next();
-                    setFromResultSet(rs);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                listData.add(new DataThuCong(ticker, dateTime, open, high, low, close, volume));
-            }
-        }
-        return listData;
-    }
-
     // Lấy tất cả data
     public ArrayList<DataThuCong> layAllData(){
         ArrayList<String> listTables= new ArrayList<>();
@@ -146,52 +84,6 @@ public class DatabaseGetter extends DataGetter {
         }
     }
 
-    //Lấy data các cổ phiểu bluechip
-    public ArrayList<DataThuCong> layDataBluechip(String date)  {
-        var bluechipList = new String[]{"VNM", "VCB", "VIC", "FPT", "MWG", "VJC", "HPG", "DHG", "SAB", "MBB", "BID", "POW"};
-        var bluechipObjectList = new ArrayList<DataThuCong>();
-        formatDate(date);
-        //Query bluechip theo ngay
-        int listLength = bluechipList.length;
-
-        try {
-            for (int i = 0; i < listLength; i++) {
-                String sql = "SELECT * FROM StockData.`CafeF.HSX." + ngay + "." + thang + "." + nam + "` WHERE `<Ticker>` = '" + bluechipList[i] + "'";
-                ResultSet rs = statement.executeQuery(sql);
-                rs.next();
-                setFromResultSet(rs);
-                bluechipObjectList.add(new DataThuCong(ticker, date, open, high, low, close, volume));
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bluechipObjectList;
-    }
-
-//    public ArrayList<DataTheoMa> layDataTangManh(String date, String maSan){
-//        var tangManhObjectList = new ArrayList<DataTheoMa>();
-//
-//    }
-
-    public List<String> lay7NgayGanNhat(String selectedDay){
-        //Selected day dang 02112020
-        List<String> recentDateList = new ArrayList<>();
-        Calendar cal = Calendar.getInstance();
-        DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
-        Date date = null;
-        try {
-            date = dateFormat.parse(selectedDay);
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        recentDateList.add(dateFormat.format(date));
-        cal.setTime(date);
-        for (int i = 0; i < 6; i++){
-            cal.add(Calendar.DATE, -1);
-            recentDateList.add(new SimpleDateFormat("ddMMyyyy").format(cal.getTime()));
-        }
-        return recentDateList;
-    }
 
     public void setFromResultSet(ResultSet rs) throws Exception {
         ticker = rs.getString("<Ticker>");

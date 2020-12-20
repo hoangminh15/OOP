@@ -73,7 +73,6 @@ public class DataTheoMaNhieuNgayRealtime implements DataTheoMaNhieuNgayFetcher {
         for (String ngayTrongThang : bayNgayGanNhat) {
             Data data = null;
             try {
-                System.out.println("Table thi sao: " + ngayTrongThang);
                 String ngayToPass = ngayTrongThang.substring(0, 2);
                 String thangToPass = ngayTrongThang.substring(2, 4);
                 String namToPass = ngayTrongThang.substring(4);

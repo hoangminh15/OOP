@@ -3,6 +3,7 @@ package Controller;
 
 import DataAccessor.DataGetter;
 import DataAccessor.RealtimeDataGetter;
+import DataService.DataBluechipRealtime;
 import DataService.DataTheoMaNhieuNgayRealtime;
 import DataService.DataTheoMaRealtime;
 import Entity.Data;
@@ -49,15 +50,7 @@ public class HomeController implements Initializable {
 	@FXML
 	Button bluechipButton;
 	@FXML
-	Button nuocNgoaiButton;
-	@FXML
-	Button tangManhButton;
-	@FXML
-	Button giamManhButton;
-	@FXML
 	ComboBox<String> nhomCoPhieu;
-	@FXML
-	Button xemTheoNhomButton;
 	@FXML
 	TextArea banTinText;
 	@FXML
@@ -215,9 +208,12 @@ public class HomeController implements Initializable {
 
 	// Listener cho Bluechip
 	public void xemBluechip(ActionEvent event) throws Exception {
+		if(thoiGian.getValue() == null) popUpMissingField();
 		// Get data
 		// Tra ve list cac "data object" thuoc nhom co phieu BlueChip
-		bluechip = new SentenceBluechip(dateData);
+		dataGetter.setDataBluechipFetcher(new DataBluechipRealtime());
+		List<Data> bluechipList = dataGetter.thucHienLayDataBlueChip(dateData);
+		bluechip = new SentenceBluechip(bluechipList);
 		banTinText.setText(bluechip.highVolume() + "\n" + bluechip.highGiaTri() + "\n" + bluechip.lowGiaTri() + "\n"
 				+ bluechip.highGTGD() + "\n" + bluechip.tangManh());
 	}

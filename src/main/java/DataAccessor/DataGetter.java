@@ -1,5 +1,6 @@
 package DataAccessor;
 
+import DataService.DataBluechipFetcher;
 import DataService.DataTheoMaFetcher;
 import DataService.DataTheoMaNhieuNgayFetcher;
 import Entity.Data;
@@ -36,6 +37,7 @@ public class DataGetter {
     //Strategy Pattern
     DataTheoMaFetcher dataTheoMaFetcher;
     DataTheoMaNhieuNgayFetcher dataTheoMaNhieuNgayFetcher;
+    DataBluechipFetcher dataBluechipFetcher;
 
     public void setDataTheoMaFetcher(DataTheoMaFetcher dataTheoMaFetcher) {
         this.dataTheoMaFetcher = dataTheoMaFetcher;
@@ -58,8 +60,16 @@ public class DataGetter {
     }
 
     public List<Data> thucHienLayDataTheoMaNhieuNgay(String namThangNgay, String maSan, String maCoPhieu){
-        List<Data> dataList;
-        dataList = dataTheoMaNhieuNgayFetcher.layDataTheoMaNhieuNgay(namThangNgay, maSan, maCoPhieu);
+        List<Data> dataList = dataTheoMaNhieuNgayFetcher.layDataTheoMaNhieuNgay(namThangNgay, maSan, maCoPhieu);
+        return dataList;
+    }
+
+    public void setDataBluechipFetcher(DataBluechipFetcher dataBluechipFetcher) {
+        this.dataBluechipFetcher = dataBluechipFetcher;
+    }
+
+    public List<Data> thucHienLayDataBlueChip(String date){
+        List<Data> dataList = dataBluechipFetcher.layDataBlueChip(date);
         return dataList;
     }
 

@@ -1,9 +1,11 @@
 package Sentence;
 
-import Entity.DataThuCong;
+import Entity.Data;
+import Entity.DataRealtime;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import java.math.RoundingMode;
@@ -11,13 +13,13 @@ import java.text.DecimalFormat;
 
 public class SentenceWithGroupGenerator {
     private String groupName;
-    private ArrayList<DataThuCong> listData;
+    private List<DataRealtime> listData;
     private static DecimalFormat df2 = new DecimalFormat("#.##");
 
-    public SentenceWithGroupGenerator(String groupName, ArrayList<DataThuCong> listData){
+    public SentenceWithGroupGenerator(String groupName, List<Data> listData){
         df2.setRoundingMode(RoundingMode.DOWN);
         this.groupName = groupName;
-        this.listData = listData;
+        this.listData =  listData.stream().map(data -> (DataRealtime) data).collect(Collectors.toList());
     }
 
     public String generateSentence() {
@@ -27,8 +29,8 @@ public class SentenceWithGroupGenerator {
         if(listHanoi.size() > 0){
             sentence += "Sàn Hà Nội :\n\n";
             HashMap<String, String> listHanoiTheoNgay = new HashMap<>();
-            for (DataThuCong item : listHanoi){
-                double chenhlech = Math.abs((item.getOpen() - item.getClose())/item.getOpen()*100);
+            for (DataRealtime item : listHanoi){
+                double chenhlech = Math.abs((item.getGiaMoCua() - item.getGiaDongCua())/item.getGiaMoCua()*100);
                 if(listHanoiTheoNgay.containsKey(item.getDate())){
                     String quote = ", " + item.getMaCoPhieu() + " ("+df2.format(chenhlech)+"% )";
                     listHanoiTheoNgay.put(item.getDate(), listHanoiTheoNgay.get(item.getDate() + quote));
@@ -52,8 +54,8 @@ public class SentenceWithGroupGenerator {
         if(listSaiGon.size() > 0){
             sentence += "Sàn Hồ Chí Minh :\n\n";
             HashMap<String, String> listSaiGonTheoNgay = new HashMap<>();
-            for (DataThuCong item : listSaiGon){
-                double chenhlech = Math.abs((item.getOpen() - item.getClose())/item.getOpen()*100);
+            for (DataRealtime item : listSaiGon){
+                double chenhlech = Math.abs((item.getGiaMoCua() - item.getGiaDongCua())/item.getGiaMoCua()*100);
                 if(listSaiGonTheoNgay.containsKey(item.getDate())){
                     String quote = ", " + item.getMaCoPhieu() + " ("+df2.format(chenhlech)+"% )";
                     listSaiGonTheoNgay.put(item.getDate(), listSaiGonTheoNgay.get(item.getDate()) + quote);
