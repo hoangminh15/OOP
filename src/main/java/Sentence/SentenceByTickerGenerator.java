@@ -2,7 +2,6 @@ package Sentence;
 
 import DataAccessor.DataGetter;
 import DataService.DataTheoMaRealtime;
-import Entity.Data;
 import Entity.DataRealtime;
 
 import static java.lang.StrictMath.abs;
@@ -11,19 +10,20 @@ import java.io.*;
 import java.util.Scanner;
 
 
-import DataAccessor.RealtimeDataGetter;
 import Helper.YesterdayFinder;
 
 public class SentenceByTickerGenerator {
 	DataRealtime data;
-	File file;
 	Scanner sc;
 	private FormNumber form = new FormNumber();
+	DataGetter dataGetter;
 
 	public SentenceByTickerGenerator(DataRealtime data) throws FileNotFoundException {
 		File file = new File("cau_theo_ngay.txt");
 		sc = new Scanner(file);
 		this.data = data;
+		dataGetter = new DataGetter();
+		dataGetter.setDataTheoMaFetcher(new DataTheoMaRealtime());
 	}
 
 	public String generateSentence() {
@@ -40,30 +40,27 @@ public class SentenceByTickerGenerator {
 		} else
 			loaiThayDoi = "giảm";
 		sc.nextLine();
-		String sentence = sc.nextLine() + maCoPhieu + " " + loaiThayDoi + " " + +roundedPercentageChange
+		return sc.nextLine() + maCoPhieu + " " + loaiThayDoi + " " + +roundedPercentageChange
 				+ sc.nextLine();
-		return sentence;
 	}
 
 	public String getReferencePrice() {
 		sc.nextLine();
-		String message = sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + form.getForm(data.getGiaDongCua())
+		return sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + form.getForm(data.getGiaDongCua())
 				+ sc.nextLine();
-		return message;
 	}
 
 	public String giaCP() {
 		sc.nextLine();
-		String message = sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + form.getForm(data.getGiaMoCua())
+		return sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + form.getForm(data.getGiaMoCua())
 				+ sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + form.getForm(data.getGiaThapNhat())
 				+ sc.nextLine() + form.getForm(data.getGiaCaoNhat()) + sc.nextLine() + form.getForm(data.getGiaDongCua())
 				+ sc.nextLine();
-		return message;
 	}
 
 	public String khoiLuongGD() {
 		double giatriGD = data.getGtgdKhopLenh();
-		String giatri = new String();
+		String giatri;
 		if (giatriGD > Math.pow(10, 6)) {
 			giatriGD = Math.round(giatriGD / Math.pow(10, 5)) / 10;
 			giatri = form.getForm(giatriGD) + " tỷ đồng";
@@ -72,31 +69,27 @@ public class SentenceByTickerGenerator {
 			giatri = form.getForm(giatriGD) + " triệu đồng";
 		}
 		sc.nextLine();
-		String message = sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + data.getKlgdKhopLenh() + sc.nextLine()
+		return sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() + data.getKlgdKhopLenh() + sc.nextLine()
 				+ giatri;
-		return message;
 	}
 
 
 	public String GiaTranSan(String dateData, String masan, String macophieu) {
 
 		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataGetter dataGetter = new DataGetter();
-		dataGetter.setDataTheoMaFetcher(new DataTheoMaRealtime());
 		DataRealtime dataYesterday = (DataRealtime) dataGetter.thucHienLayDataTheoMa(yesterday, masan, macophieu);
 		double referencePrice = dataYesterday.getGiaDongCua();
 		double tran = Math.round(referencePrice * 1.07);
 		double san = Math.round(referencePrice * 0.93);
 
 		sc.nextLine();
-		String message = sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() +form.getForm(tran) + sc.nextLine() + form.getForm(san)
+		return sc.nextLine() + data.getMaCoPhieu() + sc.nextLine() +form.getForm(tran) + sc.nextLine() + form.getForm(san)
 				+ sc.nextLine();
-		return message;
 	}
 
 	public String giaCoPhieu(String dateData, String masan, String macophieu) {
 		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataRealtime dataYesterday = new RealtimeDataGetter().layDataTheoMa(yesterday, masan, macophieu);
+		DataRealtime dataYesterday = (DataRealtime) dataGetter.thucHienLayDataTheoMa(yesterday, masan, macophieu);
 		double referencePrice = dataYesterday.getGiaDongCua();
 		double close = data.getGiaDongCua();
 		double percentageChange = abs((close - referencePrice) / referencePrice);
@@ -113,7 +106,7 @@ public class SentenceByTickerGenerator {
 	public String soSanhGD(String dateData, String masan, String macophieu) {
 		String message;
 		String yesterday = new YesterdayFinder().Sau(dateData);
-		DataRealtime dataYesterday = new RealtimeDataGetter().layDataTheoMa(yesterday, masan, macophieu);
+		DataRealtime dataYesterday = (DataRealtime) dataGetter.thucHienLayDataTheoMa(yesterday, masan, macophieu);
 		double yesterdayKL = dataYesterday.getKlgdKhopLenh();
 		String ss = form.getForm(Math.abs(data.getKlgdKhopLenh() - yesterdayKL));
 		String type = (data.getKlgdKhopLenh() > yesterdayKL) ? " tăng " : " giảm ";

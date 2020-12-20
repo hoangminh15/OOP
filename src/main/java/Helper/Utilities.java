@@ -3,8 +3,6 @@ package Helper;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -17,11 +15,9 @@ public class Utilities {
             Date ourDate = dateFormat.parse(date);
             long dif = ourDate.getTime();
             result = TimeUnit.DAYS.convert(dif, TimeUnit.MILLISECONDS) + 1;
-            System.out.println("so ngay tu 1 1 1970: " + result);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-
         return result;
     }
 }

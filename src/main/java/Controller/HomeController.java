@@ -2,16 +2,15 @@
 package Controller;
 
 import DataAccessor.DataGetter;
-import DataAccessor.RealtimeDataGetter;
 import DataService.DataBluechipRealtime;
+import DataService.DataByGroupRealtime;
 import DataService.DataTheoMaNhieuNgayRealtime;
 import DataService.DataTheoMaRealtime;
 import Entity.Data;
 import Entity.DataRealtime;
 import Helper.CreateLineChart;
 import Helper.DateValidator;
-import DataAccessor.DatabaseGetter;
-import DataAccessor.TickerValidator;
+import Helper.TickerValidator;
 import Sentence.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,31 +54,21 @@ public class HomeController implements Initializable {
 	TextArea banTinText;
 	@FXML
 	ImageView imageView;
-
 	@FXML
 	private LineChart<Number, Number> chart;
-
 	@FXML
 	private NumberAxis timeAxis;
-
 	@FXML
 	private NumberAxis valueAxis;
 
 	String dateData;
-	DatabaseGetter databaseGetterObject;
-	DateValidator dateValidator;
 	SentenceByTickerGenerator sentenceByTickerGenerator;
 	SentenceBluechip bluechip;
-	RealtimeDataGetter realtimeDataGetter;
-
 	DataGetter dataGetter;
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
 		dataGetter = new DataGetter();
-		databaseGetterObject = new DatabaseGetter();
-		dateValidator = new DateValidator();
-		realtimeDataGetter = new RealtimeDataGetter();
 		File file = new File("View/stockPic.jpeg");
 		Image image = new Image(file.toURI().toString());
 		imageView = new ImageView(image);
@@ -89,26 +78,21 @@ public class HomeController implements Initializable {
 
 		ObservableList<String> nhomCoPhieuList = FXCollections.observableArrayList("Dầu khí", "Ngân hàng");
 		nhomCoPhieu.setItems(nhomCoPhieuList);
-
 		nhomCoPhieu.valueProperty().addListener((observable, oldValue, newValue) -> {
 			xemTheoGroup(newValue);
 		});
-
 		createLineChart();
 		banTinText.setFont(Font.font(16));
 	}
 
 	public void createLineChart() {
 		chart.setTitle("Chart");
-
 		maText.textProperty().addListener(((observable, oldValue, newValue) -> {
 			updateLineChart();
 		}));
-
 		sanText.valueProperty().addListener((observable -> {
 			updateLineChart();
 		}));
-
 		updateLineChart();
 	}
 
@@ -124,9 +108,7 @@ public class HomeController implements Initializable {
 				chart.setTitle("Mã " + maCoPhieu + " trong sàn " + maSan);
 				dataGetter.setDataTheoMaNhieuNgayFetcher(new DataTheoMaNhieuNgayRealtime());
 				List<Data> listData = dataGetter.thucHienLayDataTheoMaNhieuNgay(dateData, maSan, maCoPhieu);
-
 				ArrayList<XYChart.Series<Number, Number>> listLines = CreateLineChart.createLines(timeAxis, valueAxis, listData);
-
 				chart.getData().addAll(listLines);
 			} else {
 				chart.setTitle("Không có mã " + maCoPhieu + " trong sàn " + maSan);
@@ -143,8 +125,7 @@ public class HomeController implements Initializable {
 		 0 tương đương với Sunday, 6 tương đương với Saturday là 2 ngày thị trường
 		 chứng khoán không hoạt động
 		 */
-		int dayOfWeekByInt = dateValidator.findDayOfWeek(localDate.getDayOfMonth(), localDate.getMonthValue(),
-				localDate.getYear());
+		int dayOfWeekByInt = DateValidator.findDayOfWeek(localDate.getDayOfMonth(), localDate.getMonthValue(), localDate.getYear());
 		// Kiểm tra xem ngày được chọn có phải trong tương lai không
 		try {
 			if (new SimpleDateFormat("dd/MM/yyyy")
@@ -159,7 +140,6 @@ public class HomeController implements Initializable {
 		if (dayOfWeekByInt == 0 || dayOfWeekByInt == 6) {
 			popUpInvalidDay();
 			thoiGian.setValue(null);
-			System.out.println("Here");
 			return;
 		}
 		// format ngày để tiện cho việc truyền dữ liệu
@@ -178,14 +158,14 @@ public class HomeController implements Initializable {
 		if (tenGroup == null) {
 			return;
 		}
+		dataGetter.setDataByGroupFetcher(new DataByGroupRealtime());
+		List<Data> groupDataList = dataGetter.thucHienLayDataTheoGroup(tenGroup);
 		if (tenGroup.equals("Dầu khí")) {
-			var sentenceWithGroup = new SentenceWithGroupGenerator("Dầu khí",
-					databaseGetterObject.layDataTheoGroup("Dầu khí"));
+			var sentenceWithGroup = new SentenceWithGroupGenerator("Dầu khí", groupDataList);
 			banTinText.setText("");
 			banTinText.setText(sentenceWithGroup.generateSentence());
 		} else if (tenGroup.equals("Ngân hàng")) {
-			var sentenceWithGroup = new SentenceWithGroupGenerator("Ngân hàng",
-					databaseGetterObject.layDataTheoGroup("Ngân hàng"));
+			var sentenceWithGroup = new SentenceWithGroupGenerator("Ngân hàng", groupDataList);
 			banTinText.setText("");
 			banTinText.setText(sentenceWithGroup.generateSentence());
 		}
@@ -201,10 +181,7 @@ public class HomeController implements Initializable {
 
 		// Method check maCoPhieu co thuoc maSan khong
 		checkExistence(maCoPhieu, maSan);
-		// Get data
 	}
-
-
 
 	// Listener cho Bluechip
 	public void xemBluechip(ActionEvent event) throws Exception {
@@ -216,14 +193,6 @@ public class HomeController implements Initializable {
 		bluechip = new SentenceBluechip(bluechipList);
 		banTinText.setText(bluechip.highVolume() + "\n" + bluechip.highGiaTri() + "\n" + bluechip.lowGiaTri() + "\n"
 				+ bluechip.highGTGD() + "\n" + bluechip.tangManh());
-	}
-
-	public void xemTangManh(ActionEvent event) throws Exception {
-		DataRealtime dataRealtime = realtimeDataGetter.layDataTheoMa("20201103", "HSX", "VNM");
-	}
-
-	public void xemGiamManh(ActionEvent event) {
-
 	}
 
 	public void checkExistence(String maCoPhieu, String maSan) throws FileNotFoundException{
@@ -239,7 +208,6 @@ public class HomeController implements Initializable {
 					+ sentenceByTickerGenerator.giaCoPhieu(dateData, maSan, maCoPhieu) + "\n"
 					+ sentenceByTickerGenerator.soSanhGD(dateData, maSan, maCoPhieu);
 			banTinText.setText(text);
-
 		} else {
 			popUpInvalidTicker();
 		}

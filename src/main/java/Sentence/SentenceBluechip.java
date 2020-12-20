@@ -2,7 +2,6 @@ package Sentence;
 
 import java.util.*;
 
-import DataAccessor.DatabaseGetter;
 import Entity.Data;
 import Entity.DataRealtime;
 import Helper.FormNumber;

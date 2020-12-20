@@ -11,7 +11,6 @@ public class Find7LatestDay {
         //Selected day dang 02112020
         List<String> recentDateList = new ArrayList<>();
         Calendar cal = Calendar.getInstance();
-        System.out.println("Selected day: " + selectedDay);
         DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
         Date date = null;
         try {
@@ -37,7 +36,6 @@ public class Find7LatestDay {
             else return true;
         }).collect(Collectors.toList());
 
-        recentDateList.forEach(System.out::println);
         return recentDateList;
     }
 }

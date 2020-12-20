@@ -31,7 +31,6 @@ public class CreateLineChart {
         seriesLow.setName("Low");
 
         for(DataRealtime item: listConcreteData){
-            System.out.println("Date duoc truy vao o dong 34 createlinechart: " + item.getDate());
             seriesOpen.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getGiaMoCua()));
             seriesClose.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getGiaDongCua()));
             seriesHigh.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getGiaCaoNhat()));
@@ -40,7 +39,6 @@ public class CreateLineChart {
 
         xAxis.setAutoRanging(false);
         xAxis.setLowerBound(Utilities.convertDateToInt(listConcreteData.get(0).getDate()));
-        System.out.println(Utilities.convertDateToInt(listConcreteData.get(0).getDate()));
         xAxis.setUpperBound(Utilities.convertDateToInt(listConcreteData.get(listConcreteData.size()-1).getDate()));
         xAxis.setTickUnit(1);
         xAxis.setTickLabelFormatter(new StringConverter<>() {

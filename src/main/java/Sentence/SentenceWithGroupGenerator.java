@@ -25,36 +25,11 @@ public class SentenceWithGroupGenerator {
     public String generateSentence() {
         String sentence = "";
         sentence += "Các nhóm cổ phiếu nhóm " + groupName + " có sự biến động với \n";
-        var listHanoi =  listData.stream().filter(x -> x.getSan().equals("HNX")).collect(Collectors.toCollection(ArrayList::new));
-        if(listHanoi.size() > 0){
-            sentence += "Sàn Hà Nội :\n\n";
-            HashMap<String, String> listHanoiTheoNgay = new HashMap<>();
-            for (DataRealtime item : listHanoi){
-                double chenhlech = Math.abs((item.getGiaMoCua() - item.getGiaDongCua())/item.getGiaMoCua()*100);
-                if(listHanoiTheoNgay.containsKey(item.getDate())){
-                    String quote = ", " + item.getMaCoPhieu() + " ("+df2.format(chenhlech)+"% )";
-                    listHanoiTheoNgay.put(item.getDate(), listHanoiTheoNgay.get(item.getDate() + quote));
-                }
-                else{
-                    String quote = "- " + item.getMaCoPhieu() + " ("+df2.format(chenhlech)+"% )";
-                    listHanoiTheoNgay.put(item.getDate(), quote);
-                }
-            }
-            for (Map.Entry mapElement : listHanoiTheoNgay.entrySet()) {
-                String key = (String)mapElement.getKey();
-                String value = ((String)mapElement.getValue());
-                sentence = sentence + value + " trong ngay " + key + " \n \n";
-            }
-        }
 
-
-
-
-        var listSaiGon  = listData.stream().filter(x -> x.getSan().equals("HSX")).collect(Collectors.toCollection(ArrayList::new));
-        if(listSaiGon.size() > 0){
+        if(listData.size() > 0){
             sentence += "Sàn Hồ Chí Minh :\n\n";
             HashMap<String, String> listSaiGonTheoNgay = new HashMap<>();
-            for (DataRealtime item : listSaiGon){
+            for (DataRealtime item : listData){
                 double chenhlech = Math.abs((item.getGiaMoCua() - item.getGiaDongCua())/item.getGiaMoCua()*100);
                 if(listSaiGonTheoNgay.containsKey(item.getDate())){
                     String quote = ", " + item.getMaCoPhieu() + " ("+df2.format(chenhlech)+"% )";
@@ -69,7 +44,7 @@ public class SentenceWithGroupGenerator {
                 String key = (String)mapElement.getKey();
                 String date = key.substring(0,4) +"/"+ key.substring(4,6) + "/" + key.substring(6,8);
                 String value = ((String)mapElement.getValue());
-                sentence = sentence + value + " trong ngay " + date + " \n \n";
+                sentence = sentence + value + " trong ngày " + date + " \n \n";
             }
         }
 

@@ -147,16 +147,4 @@ public class DataTheoMaRealtime implements DataTheoMaFetcher{
         klgdKhopLenh = Long.parseLong(rs.getString("klgdKhopLenh"));
         gtgdKhopLenh = Long.parseLong(rs.getString("gtgdKhopLenh"));
     }
-
-    public void formatDate(String ngay, String thang) {
-        if(!ngay.startsWith("0")) {
-            if (Integer.parseInt(ngay) < 10) {
-                this.ngay = "0" + ngay;
-            }
-        }
-
-        if (Integer.parseInt(thang) < 10) {
-            this.thang = "0" + thang;
-        }
-    }
 }

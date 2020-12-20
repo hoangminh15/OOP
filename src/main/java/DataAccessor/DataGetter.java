@@ -1,6 +1,7 @@
 package DataAccessor;
 
 import DataService.DataBluechipFetcher;
+import DataService.DataByGroupFetcher;
 import DataService.DataTheoMaFetcher;
 import DataService.DataTheoMaNhieuNgayFetcher;
 import Entity.Data;
@@ -10,34 +11,12 @@ import java.sql.*;
 import java.util.List;
 
 public class DataGetter {
-    static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
-    static final String DB_URL = "jdbc:mysql://localhost:3306/StockData";
-
-    //Database credentials
-    static final String USERNAME = "root";
-    static final String PASSWORD = "Minh1592";
-
-
-    Connection connection = null;
-    Statement statement = null;
-    ResultSet rs = null;
-
-    String ticker;
-    String dateTime;
-    double open;
-    double close;
-    double high;
-    double low;
-    double volume;
-
-    String nam;
-    String ngay;
-    String thang;
 
     //Strategy Pattern
     DataTheoMaFetcher dataTheoMaFetcher;
     DataTheoMaNhieuNgayFetcher dataTheoMaNhieuNgayFetcher;
     DataBluechipFetcher dataBluechipFetcher;
+    DataByGroupFetcher dataByGroupFetcher;
 
     public void setDataTheoMaFetcher(DataTheoMaFetcher dataTheoMaFetcher) {
         this.dataTheoMaFetcher = dataTheoMaFetcher;
@@ -73,18 +52,12 @@ public class DataGetter {
         return dataList;
     }
 
-    public void thietLapKetNoi() {
+    public void setDataByGroupFetcher(DataByGroupFetcher dataByGroupFetcher) {
+        this.dataByGroupFetcher = dataByGroupFetcher;
+    }
 
-        try {
-            Class.forName(JDBC_DRIVER);
-            connection = DriverManager.getConnection(DB_URL, USERNAME, PASSWORD);
-            statement = connection.createStatement();
-        } catch (Exception ex) {
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Error!");
-            alert.setHeaderText("Can't establish connection with database");
-            alert.setContentText("Please try again!");
-        }
-
+    public List<Data> thucHienLayDataTheoGroup(String groupName){
+        List<Data> listData = dataByGroupFetcher.layDataTheoGroup(groupName);
+        return listData;
     }
 }
