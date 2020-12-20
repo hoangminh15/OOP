@@ -3,12 +3,10 @@ package Controller;
 
 import DataAccessor.DataGetter;
 import DataAccessor.RealtimeDataGetter;
-import DataService.DataTheoMaFetcher;
-import DataService.DataTheoMaNhieuNgayThuCong;
+import DataService.DataTheoMaNhieuNgayRealtime;
 import DataService.DataTheoMaRealtime;
 import Entity.Data;
 import Entity.DataRealtime;
-import Entity.DataThuCong;
 import Helper.CreateLineChart;
 import Helper.DateValidator;
 import DataAccessor.DatabaseGetter;
@@ -30,7 +28,6 @@ import javafx.scene.text.Font;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.net.URL;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
@@ -86,6 +83,7 @@ public class HomeController implements Initializable {
 
 	@Override
 	public void initialize(URL url, ResourceBundle resourceBundle) {
+		dataGetter = new DataGetter();
 		databaseGetterObject = new DatabaseGetter();
 		dateValidator = new DateValidator();
 		realtimeDataGetter = new RealtimeDataGetter();
@@ -109,7 +107,6 @@ public class HomeController implements Initializable {
 
 	public void createLineChart() {
 		chart.setTitle("Chart");
-		timeAxis.setLabel("Time");
 
 		maText.textProperty().addListener(((observable, oldValue, newValue) -> {
 			updateLineChart();
@@ -132,7 +129,8 @@ public class HomeController implements Initializable {
 			String maSan = sanText.getValue().toUpperCase();
 			if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
 				chart.setTitle("Mã " + maCoPhieu + " trong sàn " + maSan);
-				List<Data> listData = new DataTheoMaNhieuNgayThuCong().layDataTheoMaNhieuNgay(dateData, maSan, maCoPhieu);
+				dataGetter.setDataTheoMaNhieuNgayFetcher(new DataTheoMaNhieuNgayRealtime());
+				List<Data> listData = dataGetter.thucHienLayDataTheoMaNhieuNgay(dateData, maSan, maCoPhieu);
 
 				ArrayList<XYChart.Series<Number, Number>> listLines = CreateLineChart.createLines(timeAxis, valueAxis, listData);
 
@@ -176,6 +174,10 @@ public class HomeController implements Initializable {
 		String month = String.valueOf(localDate.getMonthValue());
 		String year = String.valueOf(localDate.getYear());
 		dateData = year.concat(month).concat(day);
+
+		if(!maText.getText().isBlank() && !sanText.getValue().isBlank()){
+			updateLineChart();
+		}
 	}
 
 	// XEM THEO GROUP
@@ -230,7 +232,6 @@ public class HomeController implements Initializable {
 
 	public void checkExistence(String maCoPhieu, String maSan) throws FileNotFoundException{
 		if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
-			dataGetter = new DataGetter();
 			dataGetter.setDataTheoMaFetcher(new DataTheoMaRealtime());
 			DataRealtime data = (DataRealtime) dataGetter.thucHienLayDataTheoMa(dateData, maSan, maCoPhieu);
 			// Sinh cau

@@ -44,7 +44,6 @@ public class DataTheoMaRealtime implements DataTheoMaFetcher{
         nam = namThangNgay.substring(0, 4);
         thang = namThangNgay.substring(4, 6);
         ngay = namThangNgay.substring(6);
-        formatDate(ngay, thang);
         if (maSanNotConvertedYet.equals("HSX")){
             maSan = "HOSE";
         } else if(maSanNotConvertedYet.equals("HNX")){
@@ -56,8 +55,7 @@ public class DataTheoMaRealtime implements DataTheoMaFetcher{
 
         //Lay data
         //Nếu data ngày đó chưa tồn tại thì fetch về và cho vào database
-        String querySQL = "SELECT * FROM StockData." + maSanNotConvertedYet + ngay + thang + nam + " WHERE maCoPhieu = '" + maCoPhieu + "'";
-        System.out.println("Ma san " + maSan + this.maSan);
+        String querySQL = "SELECT * FROM StockData." + maSan + ngay + thang + nam + " WHERE maCoPhieu = '" + maCoPhieu + "'";
         try {
             rs = statement.executeQuery(querySQL);
             rs.next();

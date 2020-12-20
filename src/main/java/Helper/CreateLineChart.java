@@ -7,10 +7,10 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.util.StringConverter;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class CreateLineChart {
@@ -31,7 +31,7 @@ public class CreateLineChart {
         seriesLow.setName("Low");
 
         for(DataRealtime item: listConcreteData){
-            System.out.println(item.getDate());
+            System.out.println("Date duoc truy vao o dong 34 createlinechart: " + item.getDate());
             seriesOpen.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getGiaMoCua()));
             seriesClose.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getGiaDongCua()));
             seriesHigh.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getGiaCaoNhat()));
@@ -39,17 +39,25 @@ public class CreateLineChart {
         }
 
         xAxis.setAutoRanging(false);
-        xAxis.setUpperBound(Utilities.convertDateToInt(listConcreteData.get(0).getDate()));
-        System.out.println(listConcreteData.get(0).getDate());
-        xAxis.setLowerBound(Utilities.convertDateToInt(listConcreteData.get(listConcreteData.size()-1).getDate()));
+        xAxis.setLowerBound(Utilities.convertDateToInt(listConcreteData.get(0).getDate()));
+        System.out.println(Utilities.convertDateToInt(listConcreteData.get(0).getDate()));
+        xAxis.setUpperBound(Utilities.convertDateToInt(listConcreteData.get(listConcreteData.size()-1).getDate()));
         xAxis.setTickUnit(1);
         xAxis.setTickLabelFormatter(new StringConverter<>() {
             @Override
-            public String toString(Number object) {
-                int nam = object.intValue() / 365;
-                int thang = (object.intValue() - nam * 365) / 32;
-                int ngay = object.intValue() - nam * 365 - thang * 32;
-                return ngay + "/" + thang + "/" + nam;
+            public String toString(Number number) {
+                long days = number.longValue();
+                DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+                Calendar calendar = Calendar.getInstance();
+                try {
+                    calendar.setTime(dateFormat.parse("19700101"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                calendar.add(Calendar.DAY_OF_MONTH, (int) days);
+
+                String tempDate =  dateFormat.format(calendar.getTime());
+                return tempDate.substring(0, 4) + "/" + tempDate.substring(4, 6) + "/" + tempDate.substring(6);
             }
 
             @Override

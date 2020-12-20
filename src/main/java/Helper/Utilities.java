@@ -1,18 +1,27 @@
 package Helper;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Utilities {
-    public static int convertDateToInt(String date){
-        int value = 0;
+    public static long convertDateToInt(String date){
+        //Date ex: 20201220
+        long result = 0;
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyyMMdd");
+            Date ourDate = dateFormat.parse(date);
+            long dif = ourDate.getTime();
+            result = TimeUnit.DAYS.convert(dif, TimeUnit.MILLISECONDS) + 1;
+            System.out.println("so ngay tu 1 1 1970: " + result);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
-        value += Integer.parseInt(date.substring(0,4)) * 365 ;
-        value += Integer.parseInt(date.substring(4,6)) * 32;
-        value += Integer.parseInt(date.substring(6,8));
-
-        return value;
-
+        return result;
     }
 }

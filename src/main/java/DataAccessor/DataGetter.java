@@ -1,10 +1,12 @@
 package DataAccessor;
 
 import DataService.DataTheoMaFetcher;
+import DataService.DataTheoMaNhieuNgayFetcher;
 import Entity.Data;
 import javafx.scene.control.Alert;
 
 import java.sql.*;
+import java.util.List;
 
 public class DataGetter {
     static final String JDBC_DRIVER = "com.mysql.cj.jdbc.Driver";
@@ -33,6 +35,7 @@ public class DataGetter {
 
     //Strategy Pattern
     DataTheoMaFetcher dataTheoMaFetcher;
+    DataTheoMaNhieuNgayFetcher dataTheoMaNhieuNgayFetcher;
 
     public void setDataTheoMaFetcher(DataTheoMaFetcher dataTheoMaFetcher) {
         this.dataTheoMaFetcher = dataTheoMaFetcher;
@@ -48,6 +51,16 @@ public class DataGetter {
             e.printStackTrace();
         }
         return data;
+    }
+
+    public void setDataTheoMaNhieuNgayFetcher(DataTheoMaNhieuNgayFetcher dataTheoMaNhieuNgayFetcher) {
+        this.dataTheoMaNhieuNgayFetcher = dataTheoMaNhieuNgayFetcher;
+    }
+
+    public List<Data> thucHienLayDataTheoMaNhieuNgay(String namThangNgay, String maSan, String maCoPhieu){
+        List<Data> dataList;
+        dataList = dataTheoMaNhieuNgayFetcher.layDataTheoMaNhieuNgay(namThangNgay, maSan, maCoPhieu);
+        return dataList;
     }
 
     public void thietLapKetNoi() {

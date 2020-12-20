@@ -29,22 +29,20 @@
             <DatePicker fx:id="thoiGian" layoutX="3.0" layoutY="79.0" onAction="#pickDate" />
             <Label layoutX="11.0" layoutY="111.0" text="Chọn sàn" />
             <Label layoutX="12.0" layoutY="169.0" text="Chọn mã" />
-            <ComboBox fx:id="nhomCoPhieu" layoutX="26.0" layoutY="501.0" prefWidth="150.0" />
+            <ComboBox fx:id="nhomCoPhieu" layoutX="23.0" layoutY="421.0" prefWidth="150.0" />
             <Button layoutX="77.0" layoutY="232.0" mnemonicParsing="false" onAction="#xemTheoMa" styleClass="xemButton" text="Xem" fx:id="xemTheoMaButton" />
             <Label layoutX="49.0" layoutY="305.0" text="Tin nhanh">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <Button fx:id="bluechipButton" layoutX="6.0" layoutY="378.0" mnemonicParsing="false" onAction="#xemBluechip" text="Bluechip" />
-            <Button fx:id="tangManhButton" layoutX="4.0" layoutY="340.0" mnemonicParsing="false" onAction="#xemTangManh" text="Tăng mạnh" />
-            <Button fx:id="giamManhButton" layoutX="115.0" layoutY="340.0" mnemonicParsing="false" onAction="#xemGiamManh" prefHeight="26.0" prefWidth="96.0" text="Giảm mạnh" />
-            <Label layoutX="52.0" layoutY="472.0" text="Nhóm Cố Phiếu">
+            <Button fx:id="bluechipButton" layoutX="31.0" layoutY="334.0" mnemonicParsing="false" onAction="#xemBluechip" prefHeight="26.0" prefWidth="139.0" text="Bluechip" />
+            <Label layoutX="42.0" layoutY="392.0" text="Nhóm Cố Phiếu">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button layoutX="77.0" layoutY="545.0" mnemonicParsing="false" styleClass="xemButton" text="Xem" />
+            <Button layoutX="74.0" layoutY="465.0" mnemonicParsing="false" styleClass="xemButton" text="Xem" />
             <TextField fx:id="maText" layoutX="9.0" layoutY="192.0" />
             <Line endX="100.0" layoutX="103.0" layoutY="274.0" startX="-100.0" />
             <ComboBox fx:id="sanText" editable="true" layoutX="11.0" layoutY="136.0" prefWidth="150.0" visibleRowCount="3" />
@@ -60,13 +58,13 @@
    <center>
       <AnchorPane prefHeight="743.0" prefWidth="912.0" BorderPane.alignment="CENTER">
          <children>
-            <TextArea fx:id="banTinText" layoutX="8.0" layoutY="61.0" prefHeight="310.0" prefWidth="891.0" wrapText="true" />
-            <Label layoutX="300.0" layoutY="27.0" text="BẢN TIN CHỨNG KHOÁN">
+            <TextArea fx:id="banTinText" layoutX="11.0" layoutY="38.0" prefHeight="289.0" prefWidth="891.0" wrapText="true" />
+            <Label layoutX="299.0" layoutY="5.0" text="BẢN TIN CHỨNG KHOÁN">
                <font>
                   <Font name="System Bold Italic" size="19.0" />
                </font>
             </Label>
-            <LineChart fx:id="chart" layoutX="84.0" layoutY="378.0" prefHeight="219.0" prefWidth="642.0">
+            <LineChart fx:id="chart" layoutX="40.0" layoutY="336.0" prefHeight="296.0" prefWidth="782.0">
               <xAxis>
                  <NumberAxis fx:id="timeAxis" side="BOTTOM" />
               </xAxis>
@@ -78,9 +76,9 @@
       </AnchorPane>
    </center>
    <top>
-      <AnchorPane prefHeight="93.0" prefWidth="1212.0" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="53.0" prefWidth="1185.0" BorderPane.alignment="CENTER">
          <children>
-            <ImageView id="image" fx:id="imageView" fitHeight="99.0" fitWidth="212.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView id="image" fx:id="imageView" fitHeight="55.0" fitWidth="191.0" layoutY="-3.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@stockPic.jpeg" />
                </image>
