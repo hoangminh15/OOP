@@ -3,8 +3,14 @@ package DataAccessor;
 import Entity.DataThuCong;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 import java.util.stream.Collectors;
 
 public class DatabaseGetter extends DataGetter {
@@ -27,8 +33,27 @@ public class DatabaseGetter extends DataGetter {
     }
 
 
+    //Chuyen doi ma san de luu vao database
+    public String validateMaSan(String maSan){
+        if (maSan.equals("HSX")){
+            maSan = "HOSE";
+        } else if(maSan.equals("HNX")){
+            maSan = "HASTC";
+        } else if(maSan.equals("VN30")){
+            maSan = "VN30";
+        }
+        return maSan;
+    }
 
     public ArrayList<DataThuCong> layDataTheoMaNhieuNgay(String namThangNgay, String maSan, String maCoPhieu){
+        String nam = namThangNgay.substring(0, 4);
+        String thang = namThangNgay.substring(4, 6);
+        String ngay = namThangNgay.substring(6);
+        String ngayThangNam = ngay + thang + nam;
+
+        //Convert maSan cho phu hop voi database
+//        maSan = validateMaSan(maSan);
+
         ArrayList<String> listTables= new ArrayList<>();
         //Chuyen data thanh list cac ngay trong table
         listTables.add("CafeF.HNX.02.11.2020");
@@ -147,6 +172,26 @@ public class DatabaseGetter extends DataGetter {
 //        var tangManhObjectList = new ArrayList<DataTheoMa>();
 //
 //    }
+
+    public List<String> lay7NgayGanNhat(String selectedDay){
+        //Selected day dang 02112020
+        List<String> recentDateList = new ArrayList<>();
+        Calendar cal = Calendar.getInstance();
+        DateFormat dateFormat = new SimpleDateFormat("ddMMyyyy");
+        Date date = null;
+        try {
+            date = dateFormat.parse(selectedDay);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        recentDateList.add(dateFormat.format(date));
+        cal.setTime(date);
+        for (int i = 0; i < 6; i++){
+            cal.add(Calendar.DATE, -1);
+            recentDateList.add(new SimpleDateFormat("ddMMyyyy").format(cal.getTime()));
+        }
+        return recentDateList;
+    }
 
     public void setFromResultSet(ResultSet rs) throws Exception {
         ticker = rs.getString("<Ticker>");
