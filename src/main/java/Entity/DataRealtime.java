@@ -10,12 +10,13 @@ public class DataRealtime extends Data{
     private double giaThapNhat;
     private double klgdKhopLenh;
     private double gtgdKhopLenh;
+    private String date;
 
     public DataRealtime(){
 
     }
 
-    public DataRealtime(String maCoPhieu, double giaDongCua, String thayDoi, double giaThamChieu, double giaMoCua, double giaCaoNhat, double giaThapNhat, double klgdKhopLenh, double gtgdKhopLenh) {
+    public DataRealtime(String maCoPhieu, double giaDongCua, String thayDoi, double giaThamChieu, double giaMoCua, double giaCaoNhat, double giaThapNhat, double klgdKhopLenh, double gtgdKhopLenh, String date) {
         this.maCoPhieu = maCoPhieu;
         this.giaDongCua = giaDongCua;
         this.thayDoi = thayDoi;
@@ -25,6 +26,15 @@ public class DataRealtime extends Data{
         this.giaThapNhat = giaThapNhat;
         this.klgdKhopLenh = klgdKhopLenh;
         this.gtgdKhopLenh = gtgdKhopLenh;
+        this.date = date;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getMaCoPhieu() {

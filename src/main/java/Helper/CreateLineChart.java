@@ -1,5 +1,7 @@
 package Helper;
 
+import Entity.Data;
+import Entity.DataRealtime;
 import Entity.DataThuCong;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
@@ -8,9 +10,12 @@ import javafx.util.StringConverter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class CreateLineChart {
-    public static ArrayList<XYChart.Series<Number,Number>> createLines(NumberAxis xAxis, NumberAxis yAxis, ArrayList<DataThuCong> listData){
+    public static ArrayList<XYChart.Series<Number,Number>> createLines(NumberAxis xAxis, NumberAxis yAxis, List<Data> listData){
+        List<DataRealtime> listConcreteData = listData.stream().map(data -> (DataRealtime) data).collect(Collectors.toList());
         ArrayList<XYChart.Series<Number, Number>> listLines = new ArrayList<XYChart.Series<Number, Number>>();
 
         XYChart.Series<Number, Number> seriesOpen = new XYChart.Series<>();
@@ -25,26 +30,26 @@ public class CreateLineChart {
         XYChart.Series<Number, Number> seriesLow = new XYChart.Series<>();
         seriesLow.setName("Low");
 
-        Collections.sort(listData, (o1, o2) -> Integer.parseInt(o1.getDate()) <  Integer.parseInt(o2.getDate()) ? 1 : -1);
-
-        for(DataThuCong item: listData){
-            seriesOpen.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getOpen()));
-            seriesClose.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getClose()));
-            seriesHigh.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getHigh()));
-            seriesLow.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getLow()));
+        for(DataRealtime item: listConcreteData){
+            System.out.println(item.getDate());
+            seriesOpen.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getGiaMoCua()));
+            seriesClose.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getGiaDongCua()));
+            seriesHigh.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getGiaCaoNhat()));
+            seriesLow.getData().add(new XYChart.Data<>(Utilities.convertDateToInt(item.getDate()), item.getGiaThapNhat()));
         }
 
         xAxis.setAutoRanging(false);
-        xAxis.setUpperBound(Utilities.convertDateToInt(listData.get(0).getDate()));
-        xAxis.setLowerBound(Utilities.convertDateToInt(listData.get(listData.size()-1).getDate()));
+        xAxis.setUpperBound(Utilities.convertDateToInt(listConcreteData.get(0).getDate()));
+        System.out.println(listConcreteData.get(0).getDate());
+        xAxis.setLowerBound(Utilities.convertDateToInt(listConcreteData.get(listConcreteData.size()-1).getDate()));
         xAxis.setTickUnit(1);
-        xAxis.setTickLabelFormatter(new StringConverter<Number>() {
+        xAxis.setTickLabelFormatter(new StringConverter<>() {
             @Override
             public String toString(Number object) {
-                int nam =  object.intValue() / 365;
-                int thang = (object.intValue() - nam * 365)/32;
+                int nam = object.intValue() / 365;
+                int thang = (object.intValue() - nam * 365) / 32;
                 int ngay = object.intValue() - nam * 365 - thang * 32;
-                return String.valueOf(nam) + "/" + String.valueOf(thang)+ "/" + String.valueOf(ngay);
+                return ngay + "/" + thang + "/" + nam;
             }
 
             @Override
@@ -54,10 +59,10 @@ public class CreateLineChart {
         });
 
         yAxis.setAutoRanging(false);
-        DataThuCong max = Collections.max(listData, Comparator.comparing(s -> s.getHigh()));
-        DataThuCong min = Collections.min(listData, Comparator.comparing(s -> s.getLow()));
-        yAxis.setUpperBound(max.getHigh());
-        yAxis.setLowerBound(min.getLow());
+        DataRealtime max = Collections.max(listConcreteData, Comparator.comparing(s -> s.getGiaCaoNhat()));
+        DataRealtime min = Collections.min(listConcreteData, Comparator.comparing(s -> s.getGiaThapNhat()));
+        yAxis.setUpperBound(max.getGiaCaoNhat());
+        yAxis.setLowerBound(min.getGiaThapNhat());
         yAxis.setTickUnit(0.1);
 
 

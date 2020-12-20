@@ -4,7 +4,9 @@ package Controller;
 import DataAccessor.DataGetter;
 import DataAccessor.RealtimeDataGetter;
 import DataService.DataTheoMaFetcher;
+import DataService.DataTheoMaNhieuNgayThuCong;
 import DataService.DataTheoMaRealtime;
+import Entity.Data;
 import Entity.DataRealtime;
 import Entity.DataThuCong;
 import Helper.CreateLineChart;
@@ -34,6 +36,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class HomeController implements Initializable {
@@ -107,7 +110,6 @@ public class HomeController implements Initializable {
 	public void createLineChart() {
 		chart.setTitle("Chart");
 		timeAxis.setLabel("Time");
-		valueAxis.setLabel("Value");
 
 		maText.textProperty().addListener(((observable, oldValue, newValue) -> {
 			updateLineChart();
@@ -130,10 +132,9 @@ public class HomeController implements Initializable {
 			String maSan = sanText.getValue().toUpperCase();
 			if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
 				chart.setTitle("Mã " + maCoPhieu + " trong sàn " + maSan);
-				ArrayList<DataThuCong> listData = databaseGetterObject.layDataTheoMaNhieuNgay(dateData, maSan, maCoPhieu);
+				List<Data> listData = new DataTheoMaNhieuNgayThuCong().layDataTheoMaNhieuNgay(dateData, maSan, maCoPhieu);
 
-				ArrayList<XYChart.Series<Number, Number>> listLines = CreateLineChart.createLines(timeAxis, valueAxis,
-						listData);
+				ArrayList<XYChart.Series<Number, Number>> listLines = CreateLineChart.createLines(timeAxis, valueAxis, listData);
 
 				chart.getData().addAll(listLines);
 			} else {
@@ -146,9 +147,11 @@ public class HomeController implements Initializable {
 	// Action Listener cho DatePicker
 	public void pickDate(ActionEvent event) {
 		LocalDate localDate = thoiGian.getValue();
-		// Kiểm tra ngày liệu có phải thứ 7 + CN
-		// 0 tương đương với Sunday, 6 tương đương với Saturday là 2 ngày thị trường
-		// chứng khoán không hoạt động
+		/*
+		 Kiểm tra ngày liệu có phải thứ 7 + CN
+		 0 tương đương với Sunday, 6 tương đương với Saturday là 2 ngày thị trường
+		 chứng khoán không hoạt động
+		 */
 		int dayOfWeekByInt = dateValidator.findDayOfWeek(localDate.getDayOfMonth(), localDate.getMonthValue(),
 				localDate.getYear());
 		// Kiểm tra xem ngày được chọn có phải trong tương lai không

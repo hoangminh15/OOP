@@ -56,7 +56,8 @@ public class DataTheoMaRealtime implements DataTheoMaFetcher{
 
         //Lay data
         //Nếu data ngày đó chưa tồn tại thì fetch về và cho vào database
-        String querySQL = "SELECT * FROM StockData." + maSan + ngay + thang + nam + " WHERE maCoPhieu = '" + maCoPhieu + "'";
+        String querySQL = "SELECT * FROM StockData." + maSanNotConvertedYet + ngay + thang + nam + " WHERE maCoPhieu = '" + maCoPhieu + "'";
+        System.out.println("Ma san " + maSan + this.maSan);
         try {
             rs = statement.executeQuery(querySQL);
             rs.next();
@@ -76,7 +77,7 @@ public class DataTheoMaRealtime implements DataTheoMaFetcher{
         } catch(Exception e){
             e.printStackTrace();
         }
-        Data data =  new DataRealtime(maCoPhieu,  giaDongCua,  thayDoi,  giaThamChieu,  giaMoCua,  giaCaoNhat,  giaThapNhat,  klgdKhopLenh,  gtgdKhopLenh);
+        Data data =  new DataRealtime(maCoPhieu,  giaDongCua,  thayDoi,  giaThamChieu,  giaMoCua,  giaCaoNhat,  giaThapNhat,  klgdKhopLenh,  gtgdKhopLenh, nam + thang + ngay);
         return data;
 
     }
@@ -87,7 +88,7 @@ public class DataTheoMaRealtime implements DataTheoMaFetcher{
 
         String url = "https://s.cafef.vn/TraCuuLichSu2/1/" + maSan + "/" + ngay + "/" + thang + "/" + nam + ".chn";
         try {
-            Document document = Jsoup.connect(url).get();
+            Document document = Jsoup.connect(url).timeout(20000).get();
             //Tao bang de chua data realtime fetch tu tren mang ve theo ngay
             taoBang(maSan, ngay, thang, nam);
 

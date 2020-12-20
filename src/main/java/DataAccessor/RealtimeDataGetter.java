@@ -73,7 +73,7 @@ public class RealtimeDataGetter extends DataGetter {
         } catch(Exception e){
             e.printStackTrace();
         }
-        return new DataRealtime(maCoPhieu,  giaDongCua,  thayDoi,  giaThamChieu,  giaMoCua,  giaCaoNhat,  giaThapNhat,  klgdKhopLenh,  gtgdKhopLenh);
+        return new DataRealtime(maCoPhieu,  giaDongCua,  thayDoi,  giaThamChieu,  giaMoCua,  giaCaoNhat,  giaThapNhat,  klgdKhopLenh,  gtgdKhopLenh, namThangNgay);
 
     }
 
