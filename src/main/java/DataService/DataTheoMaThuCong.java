@@ -13,13 +13,13 @@ public class DataTheoMaThuCong implements DataTheoMaFetcher{
     String nam;
     String thang;
     String ngay;
-    String ticker;
-    String dateTime;
-    double open;
-    double close;
-    double high;
-    double low;
-    double volume;
+    String date;
+    String maCoPhieu;
+    double giaMoCua;
+    double giaCaoNhat;
+    double giaThapNhat;
+    double giaDongCua;
+    double klgdKhopLenh;
 
     @Override
     public Data layDataTheoMa(String date, String maSan, String maCoPhieu) throws SQLException, ClassNotFoundException {
@@ -34,7 +34,7 @@ public class DataTheoMaThuCong implements DataTheoMaFetcher{
         } catch (Exception e) {
             e.printStackTrace();
         }
-        data = new DataThuCong(ticker, dateTime, open, high, low, close, volume);
+        data = new DataThuCong(maCoPhieu, date, giaMoCua, giaCaoNhat, giaThapNhat, giaDongCua, klgdKhopLenh);
         return data;
     }
 
@@ -51,12 +51,12 @@ public class DataTheoMaThuCong implements DataTheoMaFetcher{
     }
 
     public void setFromResultSet(ResultSet rs) throws Exception {
-        ticker = rs.getString("<Ticker>");
-        dateTime = rs.getString("<DTYYYYMMDD>");
-        open = Double.parseDouble(rs.getString("<Open>"));
-        close = Double.parseDouble(rs.getString("<Close>"));
-        high = Double.parseDouble(rs.getString("<High>"));
-        low = Double.parseDouble(rs.getString("<Low>"));
-        volume = Double.parseDouble(rs.getString("<Volume>"));
+        maCoPhieu = rs.getString("<Ticker>");
+        date = rs.getString("<DTYYYYMMDD>");
+        giaMoCua = Double.parseDouble(rs.getString("<Open>"));
+        giaDongCua = Double.parseDouble(rs.getString("<Close>"));
+        giaCaoNhat = Double.parseDouble(rs.getString("<High>"));
+        giaThapNhat = Double.parseDouble(rs.getString("<Low>"));
+        klgdKhopLenh = Double.parseDouble(rs.getString("<Volume>"));
     }
 }

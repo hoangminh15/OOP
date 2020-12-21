@@ -4,25 +4,24 @@ public class DataThuCong extends Data{
 
     private String maCoPhieu;
     private String date;
-    private double open;
-    private double high;
-    private double low;
-    private double close;
-    private double volume;
-    private String san;
+    private double giaMoCua;
+    private double giaCaoNhat;
+    private double giaThapNhat;
+    private double giaDongCua;
+    private double klgdKhopLenh;
 
     public DataThuCong(){
 
     }
 
-    public DataThuCong(String maCoPhieu, String date, double open, double high, double low, double close, double volume) {
+    public DataThuCong(String maCoPhieu, String date, double giaMoCua, double giaCaoNhat, double giaThapNhat, double giaDongCua, double klgdKhopLenh) {
         this.maCoPhieu = maCoPhieu;
         this.date = date;
-        this.open = open;
-        this.high = high;
-        this.low = low;
-        this.close = close;
-        this.volume = volume;
+        this.giaMoCua = giaMoCua;
+        this.giaCaoNhat = giaCaoNhat;
+        this.giaThapNhat = giaThapNhat;
+        this.giaDongCua = giaDongCua;
+        this.klgdKhopLenh = klgdKhopLenh;
     }
 
     public String getMaCoPhieu() {
@@ -41,51 +40,43 @@ public class DataThuCong extends Data{
         this.date = date;
     }
 
-    public double getOpen() {
-        return open;
+    public double getGiaMoCua() {
+        return giaMoCua;
     }
 
-    public void setOpen(double open) {
-        this.open = open;
+    public void setGiaMoCua(double giaMoCua) {
+        this.giaMoCua = giaMoCua;
     }
 
-    public double getHigh() {
-        return high;
+    public double getGiaCaoNhat() {
+        return giaCaoNhat;
     }
 
-    public void setHigh(double high) {
-        this.high = high;
+    public void setGiaCaoNhat(double giaCaoNhat) {
+        this.giaCaoNhat = giaCaoNhat;
     }
 
-    public double getLow() {
-        return low;
+    public double getGiaThapNhat() {
+        return giaThapNhat;
     }
 
-    public void setLow(double low) {
-        this.low = low;
+    public void setGiaThapNhat(double giaThapNhat) {
+        this.giaThapNhat = giaThapNhat;
     }
 
-    public double getClose() {
-        return close;
+    public double getGiaDongCua() {
+        return giaDongCua;
     }
 
-    public void setClose(double close) {
-        this.close = close;
+    public void setGiaDongCua(double giaDongCua) {
+        this.giaDongCua = giaDongCua;
     }
 
-    public double getVolume() {
-        return volume;
+    public double getKlgdKhopLenh() {
+        return klgdKhopLenh;
     }
 
-    public void setVolume(double volume) {
-        this.volume = volume;
-    }
-
-    public String getSan() {
-        return san;
-    }
-
-    public void setSan(String san) {
-        this.san = san;
+    public void setKlgdKhopLenh(double klgdKhopLenh) {
+        this.klgdKhopLenh = klgdKhopLenh;
     }
 }

@@ -9,17 +9,18 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DataBluechipThuCong implements DataBluechipFetcher{
-    String nam;
-    String thang;
+public class DataBluechipThuCong implements DataBluechipFetcher {
     String ngay;
-    String ticker;
-    String dateTime;
-    double open;
-    double close;
-    double high;
-    double low;
-    double volume;
+    String thang;
+    String nam;
+    String date;
+    String maCoPhieu;
+    double giaMoCua;
+    double giaCaoNhat;
+    double giaThapNhat;
+    double giaDongCua;
+    double klgdKhopLenh;
+
     @Override
     public List<Data> layDataBlueChip(String date) {
         var bluechipList = new String[]{"VNM", "VCB", "VIC", "FPT", "MWG", "VJC", "HPG", "DHG", "SAB", "MBB", "BID", "POW"};
@@ -35,7 +36,7 @@ public class DataBluechipThuCong implements DataBluechipFetcher{
                 ResultSet rs = statement.executeQuery(sql);
                 rs.next();
                 setFromResultSet(rs);
-                Data data = new DataThuCong(ticker, date, open, high, low, close, volume);
+                Data data = new DataThuCong(maCoPhieu, date, giaMoCua, giaCaoNhat, giaThapNhat, giaDongCua, klgdKhopLenh);
                 bluechipObjectList.add(data);
             }
         } catch (Exception e) {
@@ -51,18 +52,18 @@ public class DataBluechipThuCong implements DataBluechipFetcher{
         if (Integer.valueOf(ngay) < 10) {
             ngay = "0" + ngay;
         }
-        if (Integer.valueOf(thang) < 10){
+        if (Integer.valueOf(thang) < 10) {
             thang = "0" + thang;
         }
     }
 
     public void setFromResultSet(ResultSet rs) throws Exception {
-        ticker = rs.getString("<Ticker>");
-        dateTime = rs.getString("<DTYYYYMMDD>");
-        open = Double.parseDouble(rs.getString("<Open>"));
-        close = Double.parseDouble(rs.getString("<Close>"));
-        high = Double.parseDouble(rs.getString("<High>"));
-        low = Double.parseDouble(rs.getString("<Low>"));
-        volume = Double.parseDouble(rs.getString("<Volume>"));
+        maCoPhieu = rs.getString("<Ticker>");
+        date = rs.getString("<DTYYYYMMDD>");
+        giaMoCua = Double.parseDouble(rs.getString("<Open>"));
+        giaDongCua = Double.parseDouble(rs.getString("<Close>"));
+        giaCaoNhat = Double.parseDouble(rs.getString("<High>"));
+        giaThapNhat = Double.parseDouble(rs.getString("<Low>"));
+        klgdKhopLenh = Double.parseDouble(rs.getString("<Volume>"));
     }
 }

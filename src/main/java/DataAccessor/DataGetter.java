@@ -5,7 +5,6 @@ import DataService.DataByGroupFetcher;
 import DataService.DataTheoMaFetcher;
 import DataService.DataTheoMaNhieuNgayFetcher;
 import Entity.Data;
-import javafx.scene.control.Alert;
 
 import java.sql.*;
 import java.util.List;

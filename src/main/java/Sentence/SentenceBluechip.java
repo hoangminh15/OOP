@@ -26,9 +26,7 @@ public class SentenceBluechip {
     // Sinh câu về khối lượng giao dịch của các cổ phiếu bluechip trong ngày
     public String highVolume() {
         String message;
-        Collections.sort(listBC, (Comparator<DataRealtime>) (o1, o2) -> {
-            return (o1.getKlgdKhopLenh() > o2.getKlgdKhopLenh()) ? -1 : 1;
-        });
+        Collections.sort(listBC, (o1, o2) -> (o1.getKlgdKhopLenh() > o2.getKlgdKhopLenh()) ? -1 : 1);
         Iterator<DataRealtime> c = listBC.iterator();
         DataRealtime a1 = c.next();
         sc.nextLine();
