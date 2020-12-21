@@ -11,7 +11,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class DataByGroupThuCong implements DataByGroupFetcher{
+public class DataByGroupThuCong implements DataByGroupFetcher {
     String date;
     String maCoPhieu;
     double giaMoCua;

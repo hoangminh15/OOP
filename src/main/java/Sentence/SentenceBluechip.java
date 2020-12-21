@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 
 public class SentenceBluechip {
     List<DataRealtime> listBC;
-    File file;
     Scanner sc;
     private FormNumber form;
 
@@ -78,12 +77,7 @@ public class SentenceBluechip {
     // trong ngày
     public String highGTGD() {
         String message;
-        Collections.sort(listBC, new Comparator<DataRealtime>() {
-            @Override
-            public int compare(DataRealtime o1, DataRealtime o2) {
-                return (o1.getKlgdKhopLenh() * o1.getGiaMoCua() > o2.getGiaMoCua() * o2.getKlgdKhopLenh()) ? -1 : 1;
-            }
-        });
+        Collections.sort(listBC, (o1, o2) -> (o1.getKlgdKhopLenh() * o1.getGiaMoCua() > o2.getGiaMoCua() * o2.getKlgdKhopLenh()) ? -1 : 1);
         Iterator<DataRealtime> c = listBC.iterator();
         DataRealtime d1 = c.next();
         double max = Math.round((d1.getKlgdKhopLenh() * d1.getGiaMoCua()) / 100000) / 10;
@@ -97,13 +91,7 @@ public class SentenceBluechip {
     // Sinh câu tăng mạnh và giảm mạnh giá trị cổ phiếu trong ngày
     public String tangManh() {
         String message;
-        Collections.sort(listBC, new Comparator<DataRealtime>() {
-            @Override
-            public int compare(DataRealtime o1, DataRealtime o2) {
-                return (o1.getGiaDongCua() - o1.getGiaMoCua() > o2.getGiaDongCua() - o2.getGiaMoCua()) ? -1 : 1;
-
-            }
-        });
+        Collections.sort(listBC, (o1, o2) -> (o1.getGiaDongCua() - o1.getGiaMoCua() > o2.getGiaDongCua() - o2.getGiaMoCua()) ? -1 : 1);
         Iterator<DataRealtime> c = listBC.iterator();
         DataRealtime d1 = c.next(), d2 = c.next();
         sc.nextLine();
@@ -113,5 +101,4 @@ public class SentenceBluechip {
 
         return message;
     }
-
 }

@@ -18,7 +18,7 @@ public class DataBluechipRealtime implements DataBluechipFetcher {
         try {
             for (int i = 0; i < listLength; i++) {
                 DataGetter dataGetter = new DataGetter();
-                dataGetter.setDataTheoMaFetcher(new DataTheoMaRealtime());
+                dataGetter.setDataTheoMaFetcher(new DataTheoMaThuCong());
                 Data data = dataGetter.thucHienLayDataTheoMa(DateFormatter.formatDate(date), "HSX", bluechipList[i]);
                 bluechipObjectList.add(data);
             }
