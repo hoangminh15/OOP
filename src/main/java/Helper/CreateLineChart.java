@@ -2,7 +2,6 @@ package Helper;
 
 import Entity.Data;
 import Entity.DataRealtime;
-import Entity.DataThuCong;
 import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart;
 import javafx.util.StringConverter;

@@ -1,17 +1,13 @@
 package DataService;
 
 import Entity.Data;
-import Entity.DataRealtime;
-import Entity.DataThuCong;
 import Helper.Find7LatestDay;
 
 import java.sql.Connection;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class DataTheoMaNhieuNgayRealtime implements DataTheoMaNhieuNgayFetcher {
     Statement statement;

@@ -2,7 +2,6 @@ package DataService;
 
 import DataAccessor.DataGetter;
 import Entity.Data;
-import Entity.DataThuCong;
 import Helper.PreviousWorkingDay;
 
 import java.text.DateFormat;
