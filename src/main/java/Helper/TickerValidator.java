@@ -10,6 +10,7 @@ import java.sql.Statement;
 public class TickerValidator{
     //Kiem tra xem ma co phieu lieu co thuoc san chung khoan hay khong
     public boolean checkExistence(String maCoPhieu, String maSan) {
+
         boolean isExisting = true;
         String sql = "SELECT * FROM StockData.`CafeF." + maSan + ".02.11.2020` WHERE `<Ticker>` = '" + maCoPhieu + "'";
         try {

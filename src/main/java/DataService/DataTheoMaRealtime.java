@@ -44,6 +44,14 @@ public class DataTheoMaRealtime implements DataTheoMaFetcher{
         nam = namThangNgay.substring(0, 4);
         thang = namThangNgay.substring(4, 6);
         ngay = namThangNgay.substring(6);
+        if (!ngay.startsWith("0")) {
+            if (Integer.parseInt(ngay) < 10) {
+                ngay = "0" + ngay;
+            }
+        }
+        if (Integer.parseInt(thang) < 10) {
+            thang = "0" + thang;
+        }
         if (maSanNotConvertedYet.equals("HSX")){
             maSan = "HOSE";
         } else if(maSanNotConvertedYet.equals("HNX")){
