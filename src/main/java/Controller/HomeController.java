@@ -180,22 +180,6 @@ public class HomeController implements Initializable {
 		String maSan = sanText.getValue().toUpperCase();
 
 		// Method check maCoPhieu co thuoc maSan khong
-		checkExistence(maCoPhieu, maSan);
-	}
-
-	// Listener cho Bluechip
-	public void xemBluechip(ActionEvent event) throws Exception {
-		if(thoiGian.getValue() == null) popUpMissingField();
-		// Get data
-		// Tra ve list cac "data object" thuoc nhom co phieu BlueChip
-		dataGetter.setDataBluechipFetcher(new DataBluechipRealtime());
-		List<Data> bluechipList = dataGetter.thucHienLayDataBlueChip(dateData);
-		bluechip = new SentenceBluechip(bluechipList);
-		banTinText.setText(bluechip.highVolume() + "\n" + bluechip.highGiaTri() + "\n" + bluechip.lowGiaTri() + "\n"
-				+ bluechip.highGTGD() + "\n" + bluechip.tangManh());
-	}
-
-	public void checkExistence(String maCoPhieu, String maSan) throws FileNotFoundException{
 		if (new TickerValidator().checkExistence(maCoPhieu, maSan)) {
 			dataGetter.setDataTheoMaFetcher(new DataTheoMaRealtime());
 			DataRealtime data = (DataRealtime) dataGetter.thucHienLayDataTheoMa(dateData, maSan, maCoPhieu);
@@ -211,6 +195,18 @@ public class HomeController implements Initializable {
 		} else {
 			popUpInvalidTicker();
 		}
+	}
+
+	// Listener cho Bluechip
+	public void xemBluechip(ActionEvent event) throws Exception {
+		if(thoiGian.getValue() == null) popUpMissingField();
+		// Get data
+		// Tra ve list cac "data object" thuoc nhom co phieu BlueChip
+		dataGetter.setDataBluechipFetcher(new DataBluechipRealtime());
+		List<Data> bluechipList = dataGetter.thucHienLayDataBlueChip(dateData);
+		bluechip = new SentenceBluechip(bluechipList);
+		banTinText.setText(bluechip.highVolume() + "\n" + bluechip.highGiaTri() + "\n" + bluechip.lowGiaTri() + "\n"
+				+ bluechip.highGTGD() + "\n" + bluechip.tangManh());
 	}
 
 	public void popUpMissingField() {
